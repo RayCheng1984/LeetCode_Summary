@@ -3,9 +3,20 @@
 return [map[target-nums[i]], i]
 map[nums[i]] = i
 
-二、三数之和
+二、三数之和(速度最快版本）
 先排序
-如果nums[i]==nums[i-1]可以跳过
+如果nums[i]>0:break
+如果nums[i]==nums[i-1]:continue
 然后通过i、l、r三个指针判断nums[i]+nums[l]+nums[r]与0的关系：
-最后添加数组res[]中
-记得需要分别保证i>0或者l<r，i+1或者l+1或者r-1
+nums[i]+nums[l]+nums[r]<0:
+  l=l+1
+nums[i]+nums[l]+nums[r]>0:
+  r=r-1
+nums[i]+nums[l]+nums[r]=0:
+  res.append([]):
+  l+1
+  r-1
+  while l<r and nums[l]==nums[l-1]:
+    l+1
+  while l<r and nums[r]==nums[r+1]:#此处重点注意，左指针要与l-1比较，右指针要与r+1比较，否则给出的测试用例虽然能通过，但是一部分案例会出错。
+    r-1
