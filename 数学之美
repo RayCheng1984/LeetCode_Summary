@@ -20,3 +20,9 @@ nums[i]+nums[l]+nums[r]=0:
     l+1
   while l<r and nums[r]==nums[r+1]:#此处重点注意，左指针要与l-1比较，右指针要与r+1比较，否则给出的测试用例虽然能通过，但是一部分案例会出错。
     r-1
+
+三、四数之和
+采用三数之和的思想，两重循环+两个指针
+第一重循环三种条件i>0 and nums[i]==nums[i-1]:continue
+第二重循环j要在i+1及len(nums)-1之间以及j>a+1且nums[j]==nums[j-1]时continue
+其他与三数之和类似
