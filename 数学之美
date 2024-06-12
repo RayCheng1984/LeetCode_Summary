@@ -26,3 +26,9 @@ nums[i]+nums[l]+nums[r]=0:
 第一重循环三种条件i>0 and nums[i]==nums[i-1]:continue
 第二重循环j要在i+1及len(nums)-1之间以及j>a+1且nums[j]==nums[j-1]时continue
 其他与三数之和类似
+
+
+四、四数相加II
+两两组合，两个双重循环
+难点：使用map.get()方法
+map.get（i+j, 0) + 1意味着当找到i+j时执行get[i+j]+1, 如果没找到，执行0+1
