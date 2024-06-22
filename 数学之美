@@ -54,3 +54,4 @@ max_sum = max(cur_sum, max_sum)
 七、最大数
 functools.cmp_to_key()将传统的比较函数转换为关键字函数，以便与sorted()、sort()等函数兼容
 join函数用于连接字符串，语法：'连接符'.join(字符串序列)
+sort默认降序，即reverse=False, 升序需改为reverse=True
