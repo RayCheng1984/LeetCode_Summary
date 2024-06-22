@@ -52,8 +52,9 @@ cur_sum = max(cur_sum, nums[i])
 max_sum = max(cur_sum, max_sum)
 
 七、最大数
+自定义比较比较，然后降序排列，最后以字符串形式拼接起来。
+当由多个0组成时，返回'000'格式会报错，应当返回'0'
+
 functools.cmp_to_key()将传统的比较函数转换为关键字函数，以便与sorted()、sort()等函数兼容
 join函数用于连接字符串，语法：'连接符'.join(字符串序列)
 sort默认升序，即reverse=False, 降序需改为reverse=True
-自定义比较方法，然后降序排列，最后以字符串形式拼接起来。
-当由多个0组成时，返回'000'格式会报错，应当返回'0'
