@@ -58,3 +58,10 @@ max_sum = max(cur_sum, max_sum)
 functools.cmp_to_key()将传统的比较函数转换为关键字函数，以便与sorted()、sort()等函数兼容
 join函数用于连接字符串，语法：'连接符'.join(字符串序列)
 sort默认升序，即reverse=False, 降序需改为reverse=True
+
+八、分数到小数
+若整除，返回str(numerator // denominator)
+若符号不一致， ans += '-'，ans += (numerator // denominator), numerator = numerator % denominator
+如果numerator != 0:
+使用字典，当numerator在字典里时，根据其索引值返回f'{ans[:temp]}({ans[temp:]})'
+如果不在字典里，建立键值对map[numerator] = len(ans)小数的索引值正好对应答案字符串的长度 numerator *=10, ans+=(numerator // denominator), numerator = numerator % denominator
