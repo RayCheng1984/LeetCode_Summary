@@ -65,3 +65,10 @@ sort默认升序，即reverse=False, 降序需改为reverse=True
 如果numerator != 0:
 使用字典，当numerator在字典里时，根据其索引值返回f'{ans[:temp]}({ans[temp:]})'
 如果不在字典里，建立键值对map[numerator] = len(ans)小数的索引值正好对应答案字符串的长度 numerator *=10, ans+=(numerator // denominator), numerator = numerator % denominator
+
+九、最大整除子集（这道题目还是不太明白）
+对数组排序，然后将每项拆分成数组，及形成数组的数组
+建立一个最大序列用来存储结果
+两重循环i，j, 判断nums[i] % nums[j] == 0 and len(dp[i]) < len(dp[j]) + 1,成立则将dp[i]更新为dp[j] + nums[i:i+1]
+比较len(dp[i])与len(最大序列的长度）,成立则将len(最大序列）更新为dp[i]
+最后返回最大序列
