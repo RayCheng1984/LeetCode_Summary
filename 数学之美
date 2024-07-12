@@ -72,3 +72,8 @@ sort默认升序，即reverse=False, 降序需改为reverse=True
 两重循环i，j, 判断nums[i] % nums[j] == 0 and len(dp[i]) < len(dp[j]) + 1,成立则将dp[i]更新为dp[j] + nums[i:i+1]
 比较len(dp[i])与len(最大序列的长度）,成立则将len(最大序列）更新为dp[i]
 最后返回最大序列
+
+十、质数排列
+定义质数判断函数，if num % i == 0:return false
+计算质数的数量，is_prime, count++
+return factorial(count) * factorial(n-count) % (10**9 + 7)
