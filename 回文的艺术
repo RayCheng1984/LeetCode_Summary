@@ -5,3 +5,54 @@
 [::-1]可以把数组翻转
 
 （二）NO.234 回文链表
+法一：将链表复制到数组中，将数组翻转，判断两个数组是否相等
+vals = []
+cur = head
+while cur:
+vals.append(cur.val_
+cur = cur.next
+return vals == vals[::-1]
+法二：双指针法
+三个函数：先通过快慢指针找到中点，然后通过头插法反转前一半链表，最后判断是否回文。
+def middleNode(self, head):
+slow = fast = head
+while fast and fast.next:
+slow = slow.next
+fast = fast.next.next
+return slow
+反转链表，见下面
+
+判断是否回文
+def isPalindrome(self, head: Optional[ListNode]) -> bool:
+if head is None:
+return True
+mid = self.middleNode(head)
+head2 = self.reverseList(mid)
+
+while head2:
+if head.val != head2.val:
+return False
+head = head.next
+head2 = head2.next
+
+
+NO.206反转链表
+双指针法：；两个指针分别是前面的空指针已经现在的指针（最开始指向头节点）pre = None, cur = head
+while cur:
+tmp = cur.next #临时指针存储下一个节点
+cur.next = pre
+pre = cur
+cur = tmp
+
+(三)回文数
+简单版：转换为字符串，然后反转
+str(x)
+x == x[::-1]
+
+进阶：反转数字，<0, ==0, %10 == 0等几种特殊情况，对>0:
+temp = x
+res = 0
+while x > 0:
+res = res * 10 + x % 10
+res // 10
+res == temp
