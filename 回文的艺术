@@ -56,3 +56,12 @@ while x > 0:
 res = res * 10 + x % 10
 res // 10
 res == temp
+
+(四)最长回文子串
+中心扩展法：
+偶数中心点在两个字符的中间位置，奇数中心点在中间字符。
+e1 = extend(i, i, s)
+e2 = extend(i, i+1, s)
+
+left >= 0 and right < len(s) and s[left] == s[right]:
+return s[left+1 : right]
