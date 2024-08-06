@@ -1,4 +1,9 @@
 NO.38 计算并报数
+每项都是对前一项的描述，计算每个字符出现的次数。
+设前两项为特例，n == 1: return '1'; n == 2: return '2'
+将n==2设为初始值，然后计算第n项的值；每轮的初始值new_res = [], num = 1, cur = res[0]
+比较当前字符与上一个字符：s == cur; 若相等则num+1; 不相等则将现有值放入结果之中，最后一个值需要额外放入结果中。
+最后将所有结果转换成字符串并拼接起来。
 join函数语法：'sep'.join(sep_object)，其中sep为分隔符，sep_object为分割对象，可为字符串（包括要连接的元素字符串、元组、列表、字典）
 map语法:map(function, iterable,...), function是一个函数，iterabel是一个可迭代对象，如列表、元组、字符串等，将function应用于iterable的每一个元素，结果以列表形式返回。
 str是python的内置函数，将每个元素变为str类型，并以列表形式返回。
