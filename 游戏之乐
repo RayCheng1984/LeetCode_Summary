@@ -7,3 +7,11 @@ NO.38 计算并报数
 join函数语法：'sep'.join(sep_object)，其中sep为分隔符，sep_object为分割对象，可为字符串（包括要连接的元素字符串、元组、列表、字典）
 map语法:map(function, iterable,...), function是一个函数，iterabel是一个可迭代对象，如列表、元组、字符串等，将function应用于iterable的每一个元素，结果以列表形式返回。
 str是python的内置函数，将每个元素变为str类型，并以列表形式返回。
+
+NO. 679 24点游戏
+math.isclose(a, b)检查两个值是否彼此接近，如果真返回True，否则返回false。
+每次选择两个数，把这两个数的计算结果和之前cards数组中的其他元素组成的列表拼接起来，作为新的cards向下递归。
+每次选择两个数，另外减法和除法交换顺序算两次（作为除数/被除数/减数/被减数要区分），除法时要判断除数不能为0。
+因为有误差，所以最后与24的误差足够小就正确。
+if cards[i] and self.judgePoint24([cards[j] / cards[i]] + cards[0:i]+ cards[i+1:j] + cards[j+1:]):
+                    return True
