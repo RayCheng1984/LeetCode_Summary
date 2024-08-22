@@ -5,7 +5,7 @@ root不存在false；root.left and root.right为空：root.val == targetSum;
 （一定要判断到叶子节点，左右子树同时为空才是叶子节点）注意此处是root.val == target而不是root = target
   向下递归左右子树self.hasPath(root.left, targetSum-root.val) or self.hasPath(root.right, targetSum-root.val) 
 法二：栈迭代
-空：false; stack[], stack.append(root, root.val)
+空：false; stack[], stack.append((root, root.val)) 此处pop方法只有一个参数，所以需要加两层括号
 栈不空时：当前节点， path= stack.pop()
 左子树不空 & 右子树不空 and path == targetSum :return True
 左子树存在：stack.append(node.left, path + node.left.val) // 注意后面更新的是node.left而不是root.left
