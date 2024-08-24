@@ -10,3 +10,15 @@ root不存在false；root.left and root.right为空：root.val == targetSum;
 左子树不空 & 右子树不空 and path == targetSum :return True
 左子树存在：stack.append(node.left, path + node.left.val) // 注意后面更新的是node.left而不是root.left
 右子树存在：stack.append(node.right, path + node.right.val)
+
+NO.113 路径总和II
+法一DFS:
+思路同上，使用DFS，如果root不存在返回，左子树为空&右子树为空&target==root.val：将当前节点添加到路径里，并将路径添加到最后列表里。
+这题需要返回所有路径，而不是只是判断是否存在路径。建立一个列表，添加路径节点。最后将所有路径存在另外的列表里返回
+def dfs(root, targetSum, path:List): 
+path += [root.val]
+ans.append(path)
+dfs(root.left, targetSum - roo.val, path + [root.val]
+ans = []
+dfs(root, targetSum, [])
+法二：迭代法
