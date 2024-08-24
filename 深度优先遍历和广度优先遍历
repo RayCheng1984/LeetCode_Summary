@@ -28,3 +28,4 @@ node, sum, path = stack.pop()
 
 注意：用递归法时，每次用的是根节点root，因为每次都相当于一棵树； 用迭代法时，每次用当前节点node， 因为节点一直在变。 
 113题比112题加了一个路径，其他类似
+113题法一中path += [roo.val], ans.append(path); 法二ans.append(path)就行，因为此时path已经保存好
