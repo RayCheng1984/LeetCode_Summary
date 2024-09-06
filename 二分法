@@ -1,1 +1,17 @@
+NO.704 二分查找
+low = 0, high = len(nums) - 1
+while low <= high:
+  mid = (low + high) // 2 # Python整型不会溢出，这样写可以；但其他语言可能溢出， mid = low + (high-low)// 2
+  if nums[mid] == target:
+    return mid
+  elif nums[mid] < target:
+    low = mid + 1
+  else:
+    high = mid - 1
+return -1
 
+NO.153 寻找旋转排序数组中的最小值
+中间元素nums[mid]和最后一个元素有关系
+nums[mid] > nums[-1]: 则元素在[mid + 1, high]中
+nums[mid] < nums[-1]: 则元素在[low, mid]中
+当low == high时，只剩下最后一个元素，即为最小值。
