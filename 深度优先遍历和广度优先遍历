@@ -1,4 +1,4 @@
-NO.112 路径总和
+dsfNO.112 路径总和
 路径和系列问题可以用DFS来解决，BFS求最短路径问题
 法一：DFS
 root不存在false；root.left and root.right为空：root.val == targetSum;
@@ -30,3 +30,41 @@ node, sum, path = stack.pop()
 113题比112题加了一个路径，其他类似
 113题法一中要不停递归，需递归到最后才是结果，所以要path += [roo.val], 然后ans.append(path); 
    法二用栈，每次到叶子就是一条结果，所以直接ans.append(path)就行,。
+
+No.124 二叉树中的最大路径和
+设置全局变量存储最大路径和，不断递归搜索每个子树更新该变量：self.maxSum = float('-inf')
+if root is None: return 0
+计算左边分支最大值，如果值为负数不如不选择: left = max(0, dfs(root.left))
+计算右边分支最大值，如果为负值不如不选择: right 
+left->root->right作为路径与已经存在的最大值比较: self.maxSum = max(self.maxSum, root.val + left + right)
+返回经过root的单边最大分支：return root.val + max(left, right)
+dfs(root)
+return self.maxSum
+
+NO.200 岛屿问题
+线性扫描整个网格找到第一个‘1’，然后以该节点开始启动深度优先遍历，将访问过的节点标为‘0’。在整个扫描过程中启动深度优先遍历方法
+的次数就是岛屿数量。
+深度优先遍历沿着一个方向走到尽头，然后换其他方向搜索。本题有4个方向
+def dfs(r,c):
+  grid[r][c] = '2'
+  if r-1 >= 0 and grid[r-1][c] == '1':#上一行
+    dfs(r-1, c)
+  if r+1 < m and grid[r+1][c] == '1':#下一行
+    dfs(r+1, c)
+  if c-1 >= 0 and grid[r][c-1] == '1':左一列
+    dfs(r, c-1)
+  if C+1 >= 0 and grid[r][c+1] == '1':右一列
+    dfs(r, c+1)
+
+if grid is None:
+return 0
+m = len(grid), n = len(grid[0]), count = 0
+for i in range(m):
+  for j in range(n):
+    if grid[i][j] == '1':
+      count += 1
+      dfs(i,j)
+return count
+
+No.305 岛屿数量II
+需要会员，暂时跳过
