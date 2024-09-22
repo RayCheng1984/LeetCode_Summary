@@ -15,3 +15,42 @@ NO.153 寻找旋转排序数组中的最小值
 nums[mid] > nums[-1]: 则元素在[mid + 1, high]中
 nums[mid] < nums[-1]: 则元素在[low, mid]中
 当low == high时，只剩下最后一个元素，即为最小值。
+
+NO.875   爱吃香蕉的珂珂
+二分查找， 最慢1， 最快max(piles)即一小时必须得吃一堆
+while left <= high时
+如果吃完所有香蕉用时 > h: 则left = mid + 1
+否则，吃太快：right = mid
+最后返回low
+
+NO.69 x的平方根
+low 0, high = x
+mid ** 2 < x and (mid + 1)**2 >x: return mid
+elif mid **2 > x: high = mid - 1
+else: low = mid + 1
+return low
+
+NO.162 寻找峰值
+中间元素 < 右侧元素， 在右侧区域找
+中间元素 < 左侧元素， 在左侧区域找
+low = 0, high = len(nums) - 1
+if mid + 1 < len(nums) and nums[mid] < nums[mid + 1]: low = mid + 1
+elif mid - 1>= 0 and nums[mid] < nums[mid - 1]: high = mid- 1
+else: return mid
+
+NO.410 分割数组的最大值
+最大值最小化或者最小值最大化一般都是用二分查找
+最小值：分割成n个数组，则最大值为max(nums), 最大值：分为一个数组，则最大值为sum(nums)
+初始化sum = 0, count = 1
+def helper(x):
+  for num in nums:
+  if sum + num <= x: sum += num
+  else: sum = num, count += 1
+  return count <=k
+
+low = max(nums), high = sum(nums)
+if low == high: return low
+elif helper(mid): high = mid
+else: low = mid + 1
+
+bisect
