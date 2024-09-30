@@ -53,4 +53,7 @@ if low == high: return low
 elif helper(mid): high = mid
 else: low = mid + 1
 
-bisect
+bisect是python内置的二分查找库，查找给定值在有序列表中的插入位置
+bisect_left(a, x, lo = 0, hi=len(a)):在a序列中找到x的插入点以保持排序顺序， lo和hi用于指定应考虑的列表子集，默认使用整个列表。如果x已经在
+a中，则插入点位于现有条目之前。
+bisect_right(a, x, lo = 0, hi = len(a)与bisect一样：类似bisect_left，返回的插入点位于a中x的任何现有条目之后。
