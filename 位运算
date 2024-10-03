@@ -37,3 +37,7 @@ if n & 1 == 0: n >>= 1
 else: if n & 2 ==0 or n == 3: n -=1
       else: n += 1
 count += 1
+
+reduce函数：对参数序列中的元素进行累积
+reduce(function函数，iterable可迭代对象）：用传给reduce中的function先对集合的第1、2个元素进行操作，
+得到的结果再按照function的规则与第三个数进行运算
