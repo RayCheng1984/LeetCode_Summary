@@ -38,6 +38,41 @@ else: if n & 2 ==0 or n == 3: n -=1
       else: n += 1
 count += 1
 
-reduce函数：对参数序列中的元素进行累积
+lamda函数：lamda [arg1 [,arg2, ]]:expression
+arg是参数列表，expression是表达式，计算并返回函数结果
+lamda常与内置函数map()、reduce()、filter()等一起使用
+
+map()函数根据提供的函数对指定序列做映射
+map(function, iterable)
+function对参数序列中的每一个参数调用function函数，最后每次返回包含function返回值的新列表
+map(lamda x: x**2, [1,2,3,4,5])
+
+reduce()函数：对参数序列中的元素进行累积
 reduce(function函数，iterable可迭代对象）：用传给reduce中的function先对集合的第1、2个元素进行操作，
 得到的结果再按照function的规则与第三个数进行运算
+reduce(lamda x,y: x + y, [1,2,3,4,5])
+
+sorted()函数：对可迭代对象进行排序操作
+sort VS sorted: sort是list的一个方法，而sorted能对所有可迭代对象进行排序
+sort是对已经存在的列表进行操作，无返回值，而sorted返回的是一个新的迭代对象，而不是在原有的基础上操作
+sorted(iterable, key = None, reverse = False)
+iterable是可迭代对象，key主要是用来进行比较的元素，reverse = True，降序；reverse = False，升序
+student = [('alice', 'female', '15'), ('bob', 'male', '13'), ('chuchu', 'male', '10')]
+sorted(student, key = lamda s: s[2])
+
+filter()函数：用于过滤序列，过滤掉不符合条件的元素，返回由符合条件的元素组成的新列表
+filter(function, iterable)序列的每个元素作为参数传给函数判断，返回True或False，最后将返回True的元素放到新列表中
+list = filter(lamda x: x % 3 == 0, [1, 2, 3])
+
+字典的get()方法：返回指定键的值
+dict.get(key [,value])
+key:字典中要查找的键
+value：可选，如果指定键的值不存在时，返回该默认值；不设置返回None
+get()方法 VS dict[key]:
+get(key)：键不存在时，返回None或设置好的默认值
+dict[key]: 键不存在时，会触发keyerror异常
+eg: 统计列表中元素出现的次数
+list = ['a','b','c','a']
+dict = {}
+for i in list:
+dict[i] = dict.get(i, 0) + 1
