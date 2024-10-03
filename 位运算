@@ -14,7 +14,10 @@ mask = 0xffffffff构造了一个32位整数的限定器，用于限定符号
 while b & mask != 0:
 carry = （a&b) << 1; a = a^b; b = carry ###备注这里b表示进位值，a表示原位值
 
-python里面如果值太大，需要将前面的位数去掉，则需返回a & mask，否则返回a
+mask = 0xffffffff构造了一个32位整数的限定器，用于限定符号
+while b & mask != 0: #因为mask为确定值且不为0， 则此处b != 0 或者防止进位值过大
+carry = （a&b) << 1; a = a^b; b = carry ###备注这里b表示进位值，a表示原位值
+python里面整型无限长，因此需要对其2**32取模使得33位及以上均为0，则当b > mask时， 需返回a & mask，否则返回a
 
 NO.397 整数替换
 法一：递归法
