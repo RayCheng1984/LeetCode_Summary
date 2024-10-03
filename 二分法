@@ -11,6 +11,13 @@ def search(self, nums: List[int], target: int) -> int:
         else:
             right = mid - 1
     return left
+有序数组的二分查找一共分为四种类型
+>=:
+>: >= x+1
+<: (>=x) - 1
+<=: (>x) - 1
+这四种都可以用lower_bound模型解决
+
 
 NO.704 二分查找
 low = 0, high = len(nums) - 1
