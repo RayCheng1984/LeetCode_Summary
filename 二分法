@@ -1,3 +1,17 @@
+灵山艾茶府 红蓝染色法
+L,R分别指向询问区间的左右边界，即闭区间[L, R]， M指向当前正在询问的数
+循环不变量：L-1一定是红色， R+1一定是蓝色
+def search(self, nums: List[int], target: int) -> int:
+    left = 0
+    right = len(nums) - 1 #闭区间[left, right]
+    while left <= right:
+        mid = (left + right) // 2 #其他语言会溢出mid = left + (right - left) // 2
+        if nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return left
+
 NO.704 二分查找
 low = 0, high = len(nums) - 1
 while low <= high:
