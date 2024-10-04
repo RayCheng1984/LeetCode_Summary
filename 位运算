@@ -76,3 +76,57 @@ list = ['a','b','c','a']
 dict = {}
 for i in list:
 dict[i] = dict.get(i, 0) + 1
+
+NO.136 只出现一次的数字
+法一：哈希表法
+遍历数组中的所有元素，设置键值对； 返回只出现了一次的元素
+hashmap = {}
+for i in nums:
+        if i not in hashmap:
+                hashmap[i] = 1
+        else:
+                hashmap[i += 1
+for i in hashmap:
+        if hashmap[i] == 1:
+                return i
+
+也可以用get()方法遍历：
+for i in nums:
+        hashmap[i] = hashmap.get(i, 0) + 1
+
+法二：数学方法
+2 * sum(set(nums)) - sum(nums)
+法一和法二的空间复杂度都是O(n)
+
+法三：异或法：
+异或操作满足交换律即a^b^a == a^a^b，将数组中所有元素做异或操作，剩下的值即为出现一次的元素
+result = 0
+for i in range(len(nums)):
+        result ^= nums[i]
+
+reduce(lamda x,y: x ^ y, nums)
+
+NO.137 只出现一次的数字II
+
+
+
+
+NO.260 只出现一次的数字III
+法一：哈希表法
+做法同NO.136, 不过需要一个列表，将符号条件的数添加的列表里， 最后返回列表
+法二：
+异或性质:相同得0， 不同得1
+0与任何数异或得原数， 数异或本身为0
+全部数字异或，得到是这两个不同数的异或结果，就知道哪些位是不同的
+根据这个不同位将数字分成两组，重新异或
+两个不同的数在两组，其他仍然相同
+for i in nums:
+ans ^= i
+ans &= -ans
+ans1 = ans2 = 0
+for i in nums:
+if ans & i:
+ans1 ^= i
+else:
+ans2 ^= i
+return [ans1, ans2]
