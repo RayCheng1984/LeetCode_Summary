@@ -4,5 +4,9 @@ NO.155 最小栈
 出栈：pop()函数删除栈顶元素
 栈顶值:top()栈顶元素的第一个值
 最小值:getMin()栈顶元素的第二个值
+***注意：在判断栈是否为空时， not self.stack != self.stack is None， 因为栈已经建立，所有not self.stack是false, 但是self.stack is None是True
 
 元组与列表类似，但是元组不能更改，元组使用小括号，列表使用方括号
+Python里的self:
+self代表类的实例，而非类
+self的主要作用是允许类的实例方法访问类的属性和其他方法
