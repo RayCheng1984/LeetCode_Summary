@@ -31,3 +31,19 @@ if c not in node:
 node[c] = {}
 node = node[c]
 node['#'] in node
+
+
+NO.146 LRU缓存机制
+super()函数用于调用父类方法，在子类中可以使用super()来访问父类的属性和方法，从而实现对父类的调用和扩展
+MRO(method resolution order)方法解析顺序：对于定义的每一个类，python会计算出一个MRO表，它代表了类继承的顺序
+MRO原则：子类永远在父类前面——如果有多个父类，根据他们在列表中的顺序进行检查——如果对下一个类存在多个合法选择，选择第一个父类
+
+collections是python内置的集合模块，里面提供dict, list, set, tuple的替代选择
+常用方法：1、namedtuple():命名元组，用其可以很方便的定义一种数据类型，在里面可以使用属性而不是索引来使用tuple的某个元素
+2、deque():双端队列，使用列表存储数据，查找很快但是删除和插入很慢，deque是可以实现高效插入和删除的双向列表，方法有append(), pop(), appendleft(), popleft()
+3、defaultdict():默认值字典，使用普通字典，key不存在就会报错，用defaultdict当key不存在时，就会返回默认值
+4、OrderedDict():有序字典，普通字典是无序的，如果要保持key的顺序，可以用OrderedDict()。
+它会按照key插入的顺序排序，它可以实现一个先进先出的dict， 当容量超出限制时，删除最早添加的key
+popitem(last = False/True)：该方法删除一个键值对，如果last = False，则先进先出， 如果last = True则后进先出
+move_to_end(key, last = True):将现有key移动到字典的末尾
+5、counter():是一个简单的计数器，如统计字符出现的个数，它是字典的一个子类
