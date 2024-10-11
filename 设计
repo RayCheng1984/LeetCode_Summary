@@ -52,7 +52,7 @@ move_to_end(key, last = True):将现有key移动到字典的末尾
 python继承：将父类名写在参数里面
 class LRUCache(collections.OrderedDict): 
 def _init_(self, capacity:int):
-super._init_()
+super()._init_()
 self.capacity = capacity
 
 def get(self, key:int)-> int:
