@@ -33,7 +33,7 @@ node = node[c]
 node['#'] in node
 
 
-NO.146 LRU缓存机制
+NO.146 LRU缓存机制 least recently used最近最少使用置换算法
 super()函数用于调用父类方法，在子类中可以使用super()来访问父类的属性和方法，从而实现对父类的调用和扩展
 MRO(method resolution order)方法解析顺序：对于定义的每一个类，python会计算出一个MRO表，它代表了类继承的顺序
 MRO原则：子类永远在父类前面——如果有多个父类，根据他们在列表中的顺序进行检查——如果对下一个类存在多个合法选择，选择第一个父类
@@ -47,3 +47,23 @@ collections是python内置的集合模块，里面提供dict, list, set, tuple�
 popitem(last = False/True)：该方法删除一个键值对，如果last = False，则先进先出， 如果last = True则后进先出
 move_to_end(key, last = True):将现有key移动到字典的末尾
 5、counter():是一个简单的计数器，如统计字符出现的个数，它是字典的一个子类
+
+法一：Python中有实现好的结合了哈希表和双链表的数据结构OrderedDict()，继承该方法，可以简单实现get和put
+python继承：将父类名写在参数里面
+class LRUCache(collections.OrderedDict): 
+def _init_(self, capacity:int):
+super._init_()
+self.capacity = capacity
+
+def get(self, key:int)-> int:
+if key not in self:
+return -1
+self.move_to_end(key)
+return self(key)
+
+def put(self, key: int, value: int)->None:
+if key in self::
+self.move_to_end(key)
+self[key] = value
+if len(self) > self.capacity:
+self.popitem(last = False)
