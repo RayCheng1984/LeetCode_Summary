@@ -67,3 +67,7 @@ self.move_to_end(key)
 self[key] = value
 if len(self) > self.capacity:
 self.popitem(last = False)
+
+法二：哈希表+双链表
+get(key): O(1)常数时间取值，哈希表符合要求
+put(key, value): O(1)时间，能够在常数时间插入和删除，如果想在常数时间将链表的中间节点移动到尾部，需要在O(1)时间内获得当前节点的前驱节点。
