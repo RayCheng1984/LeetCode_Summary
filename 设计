@@ -71,3 +71,53 @@ self.popitem(last = False)
 法二：哈希表+双链表
 get(key): O(1)常数时间取值，哈希表符合要求
 put(key, value): O(1)时间，能够在常数时间插入和删除，如果想在常数时间将链表的中间节点移动到尾部，需要在O(1)时间内获得当前节点的前驱节点。
+先定义链表结构，包括key, value, 前驱和后继
+class ListNode:
+  def __init__ (self, key = None, value = None):
+    self.key = key
+    self.value = value
+    self.prev = None
+    self.next = None
+再是最近最少使用置换算法
+class LRUCache:
+  def __init__(self, capacity):
+    #先建立容量和哈希表
+    self.capacity = capacity
+    self.hashmap = {}
+    #建立头节点和尾节点，然后建立双链表
+    self.head = ListNode()
+    self.tail = ListNode()
+    self.head.next = self.tail
+    self.tail.prev = self.head
+
+  #定义一个移到末尾方法，在get()和put()里面都会用到
+  def move_to_end(self, key):
+    #先找出该节点（用哈希表找），然后删除其对应的前后链接
+    node = self.hashmap[key]
+    node.prev.next = node.next
+    node.next.prev = node.prev
+    #将找到的结点插入到双链表尾节点之前
+    node.prev = self.tail.prev
+    node.next = self.tail
+    self.tail.prev.next = node
+    self.tail.prev = node
+
+  def get(self, key: int) -> int:
+    if key in hashmap:#如果已经存在就移到最后，成为最新访问的
+      self.move_to_end(key)
+      return self.hashmap.get(key).value
+    return -1
+
+def put(self, key: int, value: int) -> None:
+if key in hashmap:#key已经在哈希表中，只需要移到最后并且更新节点值
+self.move_to_end(key)
+self.hashmap(key).value = value
+else:#如果不存在，先检查缓存容量，如果已满，需要先删除，接着建立一个新链表节点（key, value)，将新节点与哈希表连接起来，
+#最后插入到尾部（注意在有头尾节点的链表插入时要先连接前驱然后连接后继节点）
+newNode = ListNode(key, value)
+self.hashmap[key] = newNode
+newNode.prev = self.tail.prev
+newNode.next = self.tail
+self.tail.prev.next = newNode
+self.tail.prev = newNode
+
