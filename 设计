@@ -108,16 +108,19 @@ class LRUCache:
       return self.hashmap.get(key).value
     return -1
 
-def put(self, key: int, value: int) -> None:
-if key in hashmap:#key已经在哈希表中，只需要移到最后并且更新节点值
-self.move_to_end(key)
-self.hashmap(key).value = value
-else:#如果不存在，先检查缓存容量，如果已满，需要先删除，接着建立一个新链表节点（key, value)，将新节点与哈希表连接起来，
-#最后插入到尾部（注意在有头尾节点的链表插入时要先连接前驱然后连接后继节点）
-newNode = ListNode(key, value)
-self.hashmap[key] = newNode
-newNode.prev = self.tail.prev
-newNode.next = self.tail
-self.tail.prev.next = newNode
-self.tail.prev = newNode
+  def put(self, key: int, value: int) -> None:
+    if key in hashmap:#key已经在哈希表中，只需要移到最后并且更新节点值
+      self.move_to_end(key)
+      self.hashmap(key).value = value
+    else:#如果不存在，先检查缓存容量，如果已满，需要先删除最前面的节点，接着建立一个新链表节点（key, value)，将新节点与哈希表连接起来， #最后插入到尾部(注意在有头尾节点的链表插入时要先连接前驱然后连接后继节点)
+      if len(self.hashmap) == self.capacity:
+        self.hashmap.pop(self.head.next.key)
+        self.head.next = self.head.next.next
+        self.head.next.prev = self.head
+      newNode = ListNode(key, value)
+      self.hashmap[key] = newNode
+      newNode.prev = self.tail.prev
+      newNode.next = self.tail
+      self.tail.prev.next = newNode
+      self.tail.prev = newNode
 
