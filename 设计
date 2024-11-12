@@ -118,7 +118,7 @@ class LRUCache:
         self.head.next = self.head.next.next
         self.head.next.prev = self.head
       newNode = ListNode(key, value) #建立一个新节点（key, value)，
-      self.hashmap[key] = newNode #将将新节点与哈希表连接起来
+      self.hashmap[key] = newNode #将新节点与哈希表连接起来
       newNode.prev = self.tail.prev 
       newNode.next = self.tail
       self.tail.prev.next = newNode #最后插入到尾部(注意在有头尾节点的链表插入时要先连接前驱再连接后继节点)
