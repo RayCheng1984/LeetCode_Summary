@@ -1,2 +1,30 @@
 二分法常用到左右端点双指针，滑动窗口用到快慢指针和固定间距指针
+
 NO.167 两数相加II
+def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left = 0
+        right = len(numbers) - 1
+        while left < right:
+            if numbers[left] + numbers[right] > target:
+                right -= 1
+            elif numbers[left] + numbers[right] < target:
+                left += 1
+            else:
+                return [left + 1, right + 1]
+        return []
+
+NO.11 盛水问题
+储水能力由短板决定，若改变短板，水槽面积可能增大，若改变长板，水槽面积一定变小。
+左右指针分别指向左右两端，每次向内收窄短板，更新面积最大值；直到两针相遇即可获得最大面积
+def maxArea(self, height: List[int]) -> int:
+        left = 0
+        right = len(height) - 1
+        res = 0
+        while left < right:
+            if height[left] < height[right]:
+                res = max(res, height[left] * (right - left))
+                left += 1
+            else:
+                res = max(res, height[right] * (right - left))
+                right -= 1
+        return res
