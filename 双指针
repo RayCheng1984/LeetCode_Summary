@@ -56,3 +56,27 @@ def hasCycle(self, head: Optional[ListNode]) -> bool:
             if slow is fast:
                 return True
         return False
+
+NO.3 无重复字符串的最长子串
+滑动窗口法：如果字符串不存在，返回0；建立集合、左指针、最长子串、现在子串长度，对于字符串里每个字符：现在子串长度先加1，然后判断集合里面是否已经存在，若存在，则移除seen.remove(s[left])，cur_len减1，left + 1
+当子串长度大于最大子串时，max_len = cur_len，将i添入到seen里面，最后返回max_len。
+def lengthOfLongestSubstring(self, s: str) -> int:
+if not s:
+    return 0
+
+seen = set()
+left = 0
+max_len = 0
+cur_len = 0
+
+for i in s:
+    cur_len += 1
+    while i in seen:
+        seen.remove(s[left])
+        left += 1
+        cur_len -= 1
+    if cur_len > max_len:
+        max_len = cur_len
+    seen.add(i)
+return max_len
+双指针解决字符串、数组、链表相关问题。
