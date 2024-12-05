@@ -26,3 +26,17 @@ def climbStairs(self, n: int) -> int:
             first = second -first
         return second
     
+NO.62 不同路径
+法一：动态规划
+如果只有一行或者一列,到达目的网格只有一种走法；如果多行多列，那么到达目的网格只能从它的上方或者左侧走，则其动态规划方程为dp[i][j] = dp[i-1][j] + dp[i][j-1]
+最后返回dp[m-1][n-1]，因为数组的序号是从0开始的，0倒m-1个总共m行。
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[1 for i in range(n)] for j in range(m)]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        return dp[m-1][n-1]
+法二：杨辉三角形，每个位置的路径 = 该位置左边的路径 + 该位置右边的路径
+杨辉三角形和组合数是等价的，组合为从m+n-2里面选m-1个, 即用factorial阶乘函数(m+n-2)!/(m-1)/(m+n-2-(m-1))! = (m+n-2)!/(m-1)!/(n-1)!
+return int(math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1))
