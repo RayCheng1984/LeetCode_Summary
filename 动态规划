@@ -1,7 +1,28 @@
 动态规划的核心在于找到状态转移方程和处理边界条件。dp数组，通常右下角时最大规模。表格中每个子格都是一个小问题，填表的过程就是解决小问题的过程。
-动态规划3个问题进行拆解：1、问题是否分阶段，阶段是什么？
+动态规划3个问题进行拆解：
+1、问题是否分阶段，阶段是什么？
 2、与问题最优解有关的子问题是什么？
 3、透过不同阶段、最优解和子问题，我们应当关注的状态具体是什么？
 
+NO.70 爬楼梯
 法一：动态规划
 #[0]*n意味着建立一个一行n列的数组，此问题里之所以建立[0]*（n+1）的数组是因为将第0个设置一个值比较方便后续操作，这样数组的第i个数和实际的i是对应的。
+def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        dp = [0] * (n+1)
+        dp[1], dp[2] = 1, 2
+        for i in range(3, n+1):
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[n]
+    
+法二：转化为求斐波那契数列的第n项，只有初始值不一样,f(0) = 0, f(1) = 1, f(2) = 2
+def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        first, second = 1, 2
+        for i in range(3, n+1):
+            second = first + second
+            first = second -first
+        return second
+    
