@@ -73,3 +73,26 @@ def rob(self, nums: List[int]) -> int:
             first, second = second, max(first + nums[i], second)
         
         return second
+
+NO.213 打家劫舍II
+同打家劫舍I，若只有一间，偷之；若有两间，选择金额较高的那间
+对于多间房屋，不能同时偷第一间和最后一间，若偷了第一间，则不能偷最后一间，房屋下标范围是[0, n-2]， 若偷了最后一间，则不能偷第一间，房屋下标范围是[1, n-1]
+剩下的用打家劫舍I的方法解决，最后选其中价值最高的一种。
+需要建立一个函数，来寻找最大值，需要两个参数，开始下标start和结束下标end，因为这里不一定从0开始计数，若使用range函数,则end下标需要+1。
+因为前两个值为边界值，另外确定，所以开始值从start+2开始。
+使用动态规划 + 滚动数组，同样只需要存储前两个房间的金额。
+def rob(self, nums: List[int]) -> int:
+        def robRange(start, end):
+            first, second = nums[start], max(nums[start], nums[start + 1])
+            for i in range(start + 2, end + 1):
+                first, second = second, max(first + nums[i], second)
+            return second
+        
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        elif n == 2:
+            return max(nums[0], nums[1])
+        else:
+            return max(robRange(0, n-2), robRange(1, n-1))
+        
