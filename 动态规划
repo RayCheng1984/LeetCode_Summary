@@ -40,3 +40,36 @@ class Solution:
 法二：杨辉三角形，每个位置的路径 = 该位置左边的路径 + 该位置右边的路径
 杨辉三角形和组合数是等价的，组合为从m+n-2里面选m-1个, 即用factorial阶乘函数(m+n-2)!/(m-1)/(m+n-2-(m-1))! = (m+n-2)!/(m-1)!/(n-1)!
 return int(math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1))
+
+NO.198  打家劫舍
+如果只有一间，则偷；两件房屋，偷价值高的那间；
+对于多间房屋：若偷第k间，则不能偷第k-1间，总和为dp[k-2] + nums[i];  若不偷第k间，则总额为前k-1间的总额
+则状态转移方程为dp[i] = max(dp[i-2] + nums[i], dp[i-1])
+法一：动态规划
+def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 0:
+            return 0
+        if n == 1:
+            return nums[0]
+        
+        dp = [0] * n
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, n):
+            dp[i] = max(dp[i-2] + nums[i], dp[i-1])      
+        return dp[n-1]
+法二： 动态规划 + 滚动数组， 每间房屋的最高值只跟前两间房屋的最高总额有关，在每个时刻只需要存储前两间的最高总额
+def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 0:
+            return 0
+        if n == 1:
+            return nums[0]
+        
+        first, second = nums[0], max(nums[0], nums[1])
+        for i in range(2, n):
+            first, second = second, max(first + nums[i], second)
+        
+        return second
