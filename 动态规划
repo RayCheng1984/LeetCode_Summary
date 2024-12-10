@@ -96,3 +96,17 @@ def rob(self, nums: List[int]) -> int:
         else:
             return max(robRange(0, n-2), robRange(1, n-1))
         
+NO.322 零钱兑换
+动态规划：初始阶段将数组元素默认值设置为大于最大可能数的值，可以用amount + 1， 也可以用inf等值，遍历后如果所需硬币数仍是amount+1，说明没有方法凑出这个数，返回-1
+用dp[i]表示凑成金额i所需的最少硬币数，其中dp[0]表示金额为0时，数组长度为amount + 1, 因为有0存在
+遍历每个硬币for coin in coins, 从coin到amount进行遍历，取初始值和dp[i-coin]+1里面的最小值
+如果最后还是amount+1说明无法组成，返回-1，其他情况返回dp[amount]即第amount个数组的值。
+def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+        for coin in coins:
+            for i in range(coin, amount + 1):
+                dp[i] = min(dp[i], dp[i-coin] + 1)
+        return dp[amount] if dp[amount] != (amount +1) else -1
+
+NO.518 零钱兑换II
