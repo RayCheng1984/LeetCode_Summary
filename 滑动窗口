@@ -1,2 +1,10 @@
 NO.239 滑动窗口最大值
 deque = double-end queue双端队列
+collections是python的标准库，数据结构的常用模块，collections包含了一些特殊容器：
+deque()双向队列：可以快速的在队列头部和尾部添加、删除元素
+Counter()计数器：dict的子类，计算可hash对象
+defaultdict()默认字典：dict的子类，可以调用提供默认值的函数
+OrderedDict()有序字典：dict的子类，可以记住元素的添加顺序
+namedtuple()可命名元组：可以创建包含名称的元组
+
+deque()是栈和队列
