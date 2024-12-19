@@ -7,4 +7,16 @@ defaultdict()默认字典：dict的子类，可以调用提供默认值的函数
 OrderedDict()有序字典：dict的子类，可以记住元素的添加顺序
 namedtuple()可命名元组：可以创建包含名称的元组
 
-deque()是栈和队列
+deque()是栈和队列的一种广义实现，double-end queue，能在deque的两端插入和删除元素
+append()：从右端插入元素
+appendleft()：从左端插入元素
+extend()：从右端逐个添加可迭代对象（如列表，元组，字典，字符串）
+extendleft()：从左端逐个添加可迭代对象
+pop():移除列表中的元素（默认最右边），并返回该元素的值，如果没有元素，将会报indexError
+popleft():移除列表最左端的元素
+count()：统计列表中元素的个数
+inseer(index, obj)：在指定位置插入元素
+rotate(n):从右侧翻转n步，如果是负数则从左侧翻转
+clear()：将deque()中的元素全部清除，最后长度为0
+remove()：移除第一次出现的元素，如果没有找到，则报valueError
+maxlen():只读属性，deque()的最大限度长度，如果没有就返回NOne，当长度超过限制时，另一边的项会自动删除。
