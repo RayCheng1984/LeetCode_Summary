@@ -62,3 +62,6 @@ class Solution:
                 max_val = max(max_val, nums[j])   
             ans.append(max_val)
         return ans
+
+
+NO.76 最小覆盖子串
