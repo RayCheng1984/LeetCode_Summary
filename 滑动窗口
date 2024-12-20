@@ -26,3 +26,43 @@ enumerate(iterable, start):两个参数，一个可迭代对象和一个可选�
 iterable:一个可迭代对象，如列表、元组等
 start():计数的起始值，默认为为0，start参数自定义索引的起始值
 
+法一：在两端插入和删除，使用双端队列，并且需要保持单调性；双端队列里保存的是索引
+该问题可分为三步：
+1、入： 先判断：对于双端队列里小于当前值的，全部删除while q and nums[q[-1]] < num： q.pop()，然后将当前值的索引添加到队列里q.append(i)
+2、出：如果队列长度已经大于窗口k，则删除队首元素if i - q[0] + 1 > k: q.popleft()
+3、记录答案：if i >= k-1: ans.append(nums[q[0]])
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        ans = []
+        q = deque()
+
+        for i, num in enumerate(nums):
+            while q and nums[q[-1]] < num:
+                q.pop()
+            q.append(i)
+
+            if i - q[0] + 1 > k:
+                q.popleft()
+            
+            if i >= k -1:
+                ans.append(nums[q[0]])
+        
+        return ans
+
+法二：暴力解法：枚举所有窗口，找到每个窗口的最大值，然后将每个窗口最大值放入输出列表中，一共n-k+1个滑动窗口
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        n = len(nums)
+        if n * k == 0:
+            return []
+        
+        ans = []
+        for i in range(0, n-k+1):
+            max_val = - sys.maxsize - 1
+            for j in range(i, i + k):
+                max_val = max(max_val, nums[j])
+            
+            ans.append(max_val)
+        
+        return ans
