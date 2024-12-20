@@ -36,18 +36,17 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         ans = []
         q = deque()
-
         for i, num in enumerate(nums):
+            #1、进入，先判断，队列里小于当前值的，全部删除，注意队列里存的是值的索引
             while q and nums[q[-1]] < num:
                 q.pop()
             q.append(i)
-
+            #2、出，对于已经超过窗口的数，直接删除
             if i - q[0] + 1 > k:
                 q.popleft()
-            
+            #3、这里最难理解，序列从0开始，所以只有i >= k-1时才开始存储，前面的不是一个完整窗口，再往后前面操作完成第一个值是最大值，因为双端队列保持了单调性
             if i >= k -1:
-                ans.append(nums[q[0]])
-        
+                ans.append(nums[q[0]])     
         return ans
 
 法二：暴力解法：枚举所有窗口，找到每个窗口的最大值，然后将每个窗口最大值放入输出列表中，一共n-k+1个滑动窗口
@@ -55,14 +54,11 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         n = len(nums)
         if n * k == 0:
-            return []
-        
+            return []        
         ans = []
         for i in range(0, n-k+1):
             max_val = - sys.maxsize - 1
             for j in range(i, i + k):
-                max_val = max(max_val, nums[j])
-            
+                max_val = max(max_val, nums[j])   
             ans.append(max_val)
-        
         return ans
