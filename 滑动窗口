@@ -38,7 +38,7 @@ class Solution:
         q = deque()
         for i, num in enumerate(nums):
             #1、进入，先判断，队列里小于当前值的，全部删除，注意队列里存的是值的索引
-            while q and nums[q[-1]] < num:
+            while q and nums[q[-1]] <= num:
                 q.pop()
             q.append(i)
             #2、出，对于已经超过窗口的数，直接删除
