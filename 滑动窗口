@@ -71,3 +71,14 @@ most_common:counter中n个最大数目的元素，如果不设置n，则返回�
 update():更新计数器，将另一个可迭代对象的元素加入到计数器中
 counter支持加法+、减法—-、交集&、并集|
 从Python 3.10开始，Counter对象间开始支持常见的比较运算符，如大于，则左侧对应的值都大于右侧的值时，结果为True。
+
+法一：枚举s子串的右端点，如果子串涵盖t，就不断移动左端点left直到不涵盖为止，在移动过程中更新最短子串的左右端点。
+初始化ansleft = -1, ansright = len(s)
+建立哈希表统计t中每个字母出现的次数
+初始化left = 0，建立一个空哈希表统计s子串红每个字母出现的次数
+遍历s，枚举当前子串右端点right，把s[right]出现次数+1
+遍历s中每个字母及其出现次数，如果出现次数>= t 中字母出现次数：
+如果right - left < ansright - ansleft，说明找到了更短的子串，将ansleft, ansright更新为left, right
+count_S[s[left]]出现次数减一，尝试破坏条件
+左端点右移,即left+1
+重复前面三步，
