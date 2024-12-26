@@ -85,3 +85,28 @@ count_S[s[left]]出现次数减一，尝试破坏条件
 最后，如果ansleft < 0，说明没有找到更小的区间，返回空字符串，否则返回ansleft到ansright之间的字串
 
 法二：
+def minWindow(self, s: str, t: str) -> str:
+        need = Counter(t)
+        needCount = len(t)
+
+        ans_left, ans_right =-1, len(s) + 1
+        left = 0
+        for right, c in enumerate(s):
+            if need[c] > 0:
+                needCount -= 1
+            need[c] -= 1
+
+            if needCount == 0:
+                while True:
+                    c = s[left]
+                    if need[c] == 0:
+                        break
+                    need[c] += 1
+                    left += 1
+                if right - left < ans_right - ans_left:
+                    ans_left, ans_right = left, right
+                need[s[left]] += 1
+                needCount += 1
+                left += 1
+                
+        return "" if ans_left < 0 else s[ans_left: ans_right + 1]
