@@ -83,8 +83,24 @@ count_S[s[left]]出现次数减一，尝试破坏条件
 左端点右移,即left+1
 重复前面三步，直到count_s不能完全覆盖count_t
 最后，如果ansleft < 0，说明没有找到更小的区间，返回空字符串，否则返回ansleft到ansright之间的字串
+def minWindow(self, s: str, t: str) -> str:
+        ans_left, ans_right = -1, len(s)
+        count_t = Counter(t)
+        count_s = Counter()
+
+        left = 0
+        for right, c in enumerate(s):
+            count_s[c] += 1
+            while count_s >= count_t:
+                if right - left < ans_right - ans_left:
+                    ans_left, ans_right = left, right
+                count_s[s[left]] -= 1
+                left += 1
+        return '' if ans_left < 0 else s[ans_left: ans_right + 1]
 
 法二：
+整体方法类似法一，但是有所优化，如果每次判断滑动窗口是否包含T的所有元素，都去遍历need所有元素是否小于等于0，那么比较复杂，
+可以额外维护一个遍历neeCount记录所需元素总数量，当碰到一个所需元素，不仅need[c]减少1，而且needCount减少1，通过needCount就可以知道是否满足条件，而不用遍历字典。
 def minWindow(self, s: str, t: str) -> str:
         need = Counter(t)
         needCount = len(t)
@@ -92,21 +108,21 @@ def minWindow(self, s: str, t: str) -> str:
         ans_left, ans_right =-1, len(s) + 1
         left = 0
         for right, c in enumerate(s):
-            if need[c] > 0:
+            if need[c] > 0: #只有当进入的字符还需要时，count才减一，对于已经足够多的字符，计数不减
                 needCount -= 1
-            need[c] -= 1
+            need[c] -= 1#新进一个，该字符对应的数字减一
 
-            if needCount == 0:
-                while True:
+            if needCount == 0:#当滑动窗口已经完全覆盖t的所有字符
+                while True:#开始增加左指针，排除多余元素，当need[c] == 0时，说明当前元素不存在多的，跳出此次循环
                     c = s[left]
                     if need[c] == 0:
                         break
-                    need[c] += 1
+                    need[c] += 1 #如果上面的不成立，说明还存在多余的字符，继续遍历，直至没有多余
                     left += 1
-                if right - left < ans_right - ans_left:
+                if right - left < ans_right - ans_left: #当一次字符need[c] == 0时，记录当前的最小覆盖子串下标
                     ans_left, ans_right = left, right
-                need[s[left]] += 1
-                needCount += 1
-                left += 1
-                
+                need[s[left]] += 1 #一次遍历结束，最左侧的字符被移除，破坏窗口条件，此时最左侧的字符需要数+1，
+                needCount += 1  #需要的字符数+1
+                left += 1 #左指针右移
+
         return "" if ans_left < 0 else s[ans_left: ans_right + 1]
