@@ -126,3 +126,25 @@ def minWindow(self, s: str, t: str) -> str:
                 left += 1 #左指针右移
 
         return "" if ans_left < 0 else s[ans_left: ans_right + 1]
+
+NO.424 替换后的最长重复字符
+这道题是典型的滑动窗口问题，当k=0时，此题目就变成了求解字符串中最长连续子串长度
+滑动窗口求解过程：窗口初始宽带为1——出现更长的连续序列，宽度+1——当前没有更长的序列，整个窗口平移——如果发现更长的序列，窗口宽度+1
+窗口从左至右不断扩张/滑动，当窗口得到末尾时运算结束。
+此题中，当k>0时，如何判断一个字符改变k个字符能够编程一个连续串？
+窗口中字符串出现次数最多的字母个数+K，如果大于窗口长度，就满足条件
+窗口扩张：left不变，right+1
+窗口滑动：left+1, right+1
+用一个变量记录滑动窗口内相同字符出现的历史最大次数，通过判断right-left+1是否大于history+K来决定窗口是否滑动，否则扩张。
+
+def characterReplacement(self, s: str, k: int) -> int:
+        count = Counter()
+        history_max = 0 #记录历史最大窗口同字符次数
+        left = 0
+        for right in range(len(s)):
+            count[s[right]] += 1 
+            history_max = max(history_max, count[s[right]])
+            if right - left + 1 > history_max + k: #不够大时，窗口滑动，破坏原来的条件，整体向右移
+                count[s[left]] -= 1
+                left += 1
+        return right - left + 1 #返回最长长度
