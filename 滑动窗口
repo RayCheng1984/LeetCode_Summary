@@ -148,3 +148,17 @@ def characterReplacement(self, s: str, k: int) -> int:
                 count[s[left]] -= 1
                 left += 1
         return right - left + 1 #返回最长长度
+
+NO.567 字符串的排列
+s1的排列之一是s2的子串，意味着s2的子串长度和s1相等，并且其中的每个字符的数量都完全相等
+用一个和s1长度相等的滑动窗口，在s2上从左向右滑动，判断字符数量是否相等
+n1 = len(s1)
+        n2 = len(s2)
+        count_s1 = Counter(s1)
+        count_s2 = Counter(s2[:n1-1])
+        for i in range(n1-1, n2):
+            count_s2[s2[i]] += 1
+            if count_s2 == count_s1:
+                return True
+            count_s2[s2[i-n1+1]] -= 1
+        return False
