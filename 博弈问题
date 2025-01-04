@@ -3,7 +3,7 @@ NO.877 石子游戏
 因为石子总数是奇数，给石堆编号，奇数编号的总石子数相比偶数编号的总石子数，总有一个大于另外一个。
 如果石堆数是偶数，且只能从开始或结束处取走石堆，先手玩家能够单方面决定选取石堆的奇偶性，因此先手玩家必胜，返回True
 
-法二：动态规划
+法二：动态规划（是NO.486的一个特例，可以使用同样的方法求解）
 动态规划是连续的，上一个状态和下一个状态之间有关系且连续
 dp[i][j]:表示先手玩家与后手玩家在区间[i,j]之间拿，先手玩家比后手玩家多的最大石子个数。这是个差值，而且是最大差值。
 对于先手玩家，有两种拿法：
@@ -22,4 +22,18 @@ def stoneGame(self, piles: List[int]) -> bool:
         for i in range(n-1, -1, 1):
             for j in range(i+1, n, 1):
                 dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
+        return dp[0][n-1] >= 0
+
+NO.486 预测赢家
+python中list assignment index out of range错误，不能直接对空数组指定位置
+解题方法同上题法二，使用动态规划
+注意，在建立二维数组时，[[0]*n]*n的形式解释器并没有为它分配内存空间，而使用[[0 for _ in range(n)] for _ in range(n)]可避免此问题
+def predictTheWinner(self, nums: List[int]) -> bool:
+        n = len(nums)
+        dp = [[0 for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = nums[i]
+        for i in range(n-1, -1, -1):
+            for j in range(i+1, n, 1):
+                dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])
         return dp[0][n-1] >= 0
