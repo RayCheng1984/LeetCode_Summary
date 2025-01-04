@@ -37,3 +37,17 @@ def predictTheWinner(self, nums: List[int]) -> bool:
             for j in range(i+1, n, 1):
                 dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])
         return dp[0][n-1] >= 0
+
+NO.292 Nim游戏
+此题是巴什博弈的一个具体实例，两个聪明人玩游戏， n个石子， 每人每次取[1,m]个，不能拿的人输，先手后手谁胜？
+当n能整除m+1时，先手必败，否则先手必胜
+nim博弈是m=3时的特例
+def canWinNim(self, n: int) -> bool:
+        return n % 4 != 0
+只要不是4的倍数，先手必胜
+
+斐波那契博弈，两个聪明人玩游戏，一堆石子，先手第一次可以拿任意多个但不能全拿走也不能不拿，之后每人最少拿一个，最多拿前一个人的两倍
+谁最后取到谁获胜？那么谁必胜？
+当石子数为斐波那契数列时先手必败，否则先手必胜
+
+NO.375 猜数字大小II
