@@ -60,7 +60,7 @@ def getMoneyAmount(self, n: int) -> int:
                 dp[i][j] = j + dp[i][j-1]
                 for k in range(i, j):
                     dp[i][j] = min(dp[i][j], k + max(dp[i][k-1], dp[k+1][j]))
-        return dp[1][n]
+        return dp[1][n] #注意i只循环到了1，没有循环到0
 dp[i,j]表示在范围[i,j]内确保胜利的最小金额，计算目标是dp[1,n]。
 假设第一次猜的是x并且猜错，当x较大时，还需支付的金额为dp[1,x-1], 当x较小时，还需支付的金额为dp[x+1,n]。
 为了在任何情况下都能确保胜利，应考虑最坏情况，计算dp[1,n]时应取两者的最大值dp[1,n] = x + max(dp[1,x-1], dp[x+1,n])
