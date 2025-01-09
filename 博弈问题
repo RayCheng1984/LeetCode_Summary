@@ -13,13 +13,14 @@ dp[i][j]:表示先手玩家与后手玩家在区间[i,j]之间拿，先手玩家
 拿结尾的piles[j], 则区间[i, j-1]由后手玩家选择， dp[i][j-1]表示后手玩家在这个区间内比先手玩家多的最大石子数，反过来
 -dp[i][j-1]是在该区间内，先手玩家比后手玩家多的最大石子数，状态转移方程：dp[i][j]=piles[j] + (-dp[i][j-1])
 
+注意该方法右上角的为最终结果，每个框格取决于其左边和下面框格的值，因此需要从下往上、从左往右依次计算, 即i从n-1, -1, -1; j从i+1, n, 1
 在这两种情况中，选择石子数差更大的一种情况，dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
 def stoneGame(self, piles: List[int]) -> bool:
         n = len(piles)
         dp = [[0 for _ in range(n)] for _ in range(n)]
         for i in range(n):
             dp[i][i] = piles[i]
-        for i in range(n-1, -1, 1):
+        for i in range(n-1, -1, -1):
             for j in range(i+1, n, 1):
                 dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
         return dp[0][n-1] >= 0
@@ -51,3 +52,20 @@ def canWinNim(self, n: int) -> bool:
 当石子数为斐波那契数列时先手必败，否则先手必胜
 
 NO.375 猜数字大小II
+在建立二维数组后，最终计算结果在右上角，每个框格的值取决于其左边与下边的值，因此需要从下往上、从左往右计算, 因为设置的数组长度为n+1，因此i从n, 0, -1, j从i+1, n+1, k则位于i, j 之间
+def getMoneyAmount(self, n: int) -> int:
+        dp = [[0] * (n+1) for _ in range(n+1)]
+        for i in range(n, 0, -1):
+            for j in range(i+1, n+1):
+                dp[i][j] = j + dp[i][j-1]
+                for k in range(i, j):
+                    dp[i][j] = min(dp[i][j], k + max(dp[i][k-1], dp[k+1][j]))
+        return dp[1][n]
+dp[i,j]表示在范围[i,j]内确保胜利的最小金额，计算目标是dp[1,n]。
+假设第一次猜的是x并且猜错，当x较大时，还需支付的金额为dp[1,x-1], 当x较小时，还需支付的金额为dp[x+1,n]。
+为了在任何情况下都能确保胜利，应考虑最坏情况，计算dp[1,n]时应取两者的最大值dp[1,n] = x + max(dp[1,x-1], dp[x+1,n])
+为了确保胜利金额最小化，需要遍历从1到n的所有可能x,使得dp[1,n]的值最小，dp[1,n]最小为min{x + max(dp[1, x-1], dp[x+1, n])
+动态规划的范围为[i,j]表示确保胜利的最小金额，当i>=j时， dp[i,j] = 0
+当i<j时，其动态规划方程为f(i,j) = min{k + max(f(i, k-1), f(k+1, j))}
+因为创建的数组为n+1, 在状态转移方程中注意下标问题，当j=n此时k=j就会出现k+1>n 出现越界
+为了避免下标越界， 令f[i][j] = j + f[i][j-1], 然后遍历i<=k<j中的每个k,更新f[i][j]的值。
