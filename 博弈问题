@@ -54,9 +54,9 @@ def canWinNim(self, n: int) -> bool:
 NO.375 猜数字大小II
 在建立二维数组后，最终计算结果在右上角，每个框格的值取决于其左边与下边的值，因此需要从下往上、从左往右计算, 因为设置的数组长度为n+1，因此i从n, 0, -1, j从i+1, n+1, k则位于i, j 之间
 def getMoneyAmount(self, n: int) -> int:
-        dp = [[0] * (n+1) for _ in range(n+1)]
+        dp = [[0 for _ in range(n+1)] for _ in range(n+1)]
         for i in range(n, 0, -1):
-            for j in range(i+1, n+1):
+            for j in range(i+1, n+1, 1):
                 dp[i][j] = j + dp[i][j-1]
                 for k in range(i, j):
                     dp[i][j] = min(dp[i][j], k + max(dp[i][k-1], dp[k+1][j]))
