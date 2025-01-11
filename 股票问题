@@ -19,3 +19,11 @@ def maxProfit(self, prices: List[int]) -> int:
         return profit
 
 NO.122 买卖股票的最佳时机II
+法一：贪心算法
+所有上涨交易日都买卖，所有下降交易日都不买卖
+def maxProfit(self, prices: List[int]) -> int:
+        ans = 0
+        for i in range(1, len(prices)):
+            if prices[i] > prices[i-1]:
+                ans += prices[i] - prices[i-1]
+        return ans
