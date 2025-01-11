@@ -1,1 +1,21 @@
 NO.121 买卖股票的最佳时机
+法一：暴力法（超时）
+找出给定数组中的最大差值，且第二个数字必须大于第一个数字
+def maxProfit(self, prices: List[int]) -> int:
+        ans = 0
+        for i in range(len(prices)):
+            for j in range(i+1, len(prices)):
+                ans = max(prices[j] - prices[i], ans)
+        return ans
+
+法二：一次遍历
+更新前i天的最低价格，即最低买入成本cost
+更新前i天的最高利润，即前i-1天最高利润和第i天卖出的利润price[i]-cost中的最大值
+def maxProfit(self, prices: List[int]) -> int:
+        cost, profit = prices[0], 0
+        for price in prices:
+            cost = min(cost, price)
+            profit = max(profit, price - cost)
+        return profit
+
+NO.122 买卖股票的最佳时机II
