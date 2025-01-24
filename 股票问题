@@ -50,3 +50,40 @@ def maxProfit(self, prices: List[int]) -> int:
         return dp0 #最后返回卖出的状态
 
 NO.714 买卖股票的最佳时机（含手续费）
+动态规划问题，通过3个问题进行基本拆解
+1、问题是否分阶段，阶段是什么？
+2、问题最优解有关的子问题是什么？
+3、具体状态是什么样的？
+buy[i]/sell[i]分别表示第i天买入/卖出股票可以获得的累计最佳收益。
+buy[i]第i日收益有两种情况：什么也不做等同于最近一次买入操作收入buy[i-1]; 买入等于最近一次卖出收益减去今天买入的花费
+buy[i] = max(buy[i-1], sell[i-1] - prices[i])
+sell[i]卖出也有两种情况：什么也不做等于前一天卖出收益sell[i-1]; 卖出等于前一日买入加上今天卖出收益再减去手续费
+sell[i] = max(sell[i-1], buy[i-1]+ prices[i] -fee)
+def maxProfit(self, prices: List[int], fee: int) -> int:
+        n = len(prices)
+        buy, sell = [0] * n, [0] * n
+        buy[0] = -prices[0]
+        for i in range(1, n):
+            buy[i] = max(buy[i-1], sell[i-1] - prices[i])
+            sell[i] = max(sell[i-1], buy[i-1] + prices[i] - fee)
+        return sell[-1]
+动态规划的局部最优解不一定被采纳，而贪心算法是通过局部最优解产生全局最优解，这是动态规划与贪心算法的最大区别
+
+NO.309 买卖股票的最佳时机（含冷冻期）
+买入状态buy[i]的两种情况：什么也不做，等于昨日buy[i-1]; 买入，最近一次卖出减去买入花费，由于存在冷冻期，第i日买入则第i-1日不能卖出，只能
+第i-2日卖出；取两者的最大值buy[i] = max(buy[i-1], sell[i-2] - prices[i])
+卖出状态sell[i]的两种情况：什么也不做等于前一日的收益sell[i-1]；卖出收益等于前一天买入加上今天卖出收益
+取两者最大值，sell[i] = max(sell[i-1], buy[i-1] + prices[i])
+此题中，需从第3个交易日开始，因为有冷冻期，将第2天的单独处理
+def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        if n <= 1:
+            return 0
+        buy, sell = [0] * n, [0] * n
+        buy[0] = -prices[0]
+        buy[1] = max(buy[0], 0-prices[1])
+        sell[1] = max(sell[0], buy[0] + prices[1])
+        for i in range(2, n):
+            buy[i] = max(buy[i-1], sell[i-2] - prices[i])
+            sell[i] = max(sell[i-1], buy[i-1] + prices[i])
+        return sell[-1]
