@@ -75,6 +75,10 @@ NO.309 买卖股票的最佳时机（含冷冻期）
 卖出状态sell[i]的两种情况：什么也不做等于前一日的收益sell[i-1]；卖出收益等于前一天买入加上今天卖出收益
 取两者最大值，sell[i] = max(sell[i-1], buy[i-1] + prices[i])
 此题中，需从第3个交易日开始，因为有冷冻期，将第2天的单独处理
+buy[0]= -prices[0]
+buy[1] = max(buy[0], 0- prices[1])
+sell[1] = max(sell[0], buy[0] + prices[1])
+
 def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
         if n <= 1:
@@ -87,3 +91,5 @@ def maxProfit(self, prices: List[int]) -> int:
             buy[i] = max(buy[i-1], sell[i-2] - prices[i])
             sell[i] = max(sell[i-1], buy[i-1] + prices[i])
         return sell[-1]
+
+NO.188买卖股票的最佳时机IV
