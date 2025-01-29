@@ -102,3 +102,20 @@ def maxProfit(self, k: int, prices: List[int]) -> int:
                 buy[i] = max(buy[i], sell[i-1] - p)
                 sell[i] = max(sell[i], buy[i] + p)
         return sell[-1]
+
+买卖股票系列问题，买股票手里钱减少，卖股票手里钱增加，这次买还是卖跟上一次是卖还是买有关，buy和sell都表示操作之后手里的钱
+121题和122的区别在于买一次还是无穷多次，只有卖出状态0-p和sell-p的区别
+121.买卖股票的最佳时机1
+def maxProfit(self, prices: List[int]) -> int:
+        buy, sell = -sys.maxsize, 0
+        for p in prices:
+            buy = max(buy, 0-p)
+            sell = max(sell, buy + p)
+        return sell
+122.买卖股票的最佳时机2
+def maxProfit(self, prices: List[int]) -> int:
+        buy, sell = -sys.maxsize, 0
+        for p in prices:
+            buy = max(buy, sell - p)
+            sell = max(sell, buy + p)
+        return sell
