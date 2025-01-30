@@ -119,3 +119,27 @@ def maxProfit(self, prices: List[int]) -> int:
             buy = max(buy, sell - p)
             sell = max(sell, buy + p)
         return sell
+123.买卖股票的最佳时机3
+最多只允许买卖两次
+有四个状态，第一次买，第一次卖，第二次买，第二次卖
+无论什么状态，保证手里钱最多
+def maxProfit(self, prices: List[int]) -> int:
+        buy1, buy2 = -sys.maxsize, -sys.maxsize
+        sell1, sell2 = 0, 0
+        for p in prices:
+            buy1 = max(buy1, 0-p)
+            sell1 = max(sell1, buy1 + p)
+            buy2 = max(buy2, sell1 - p)
+            sell2 = max(sell2, buy2 + p)
+        return sell2
+188.买卖股票的最佳时机4
+不限制买卖次数
+def maxProfit(self, k: int, prices: List[int]) -> int:
+        k = min(k, len(prices) // 2)
+        buy = [-sys.maxsize] *(k+1)
+        sell = [0] * (k+1)
+        for p in prices:
+            for i in range(1, k+1):
+                buy[i] = max(buy[i], sell[i-1] - p)
+                sell[i] = max(sell[i], buy[i] + p)
+        return sell[-1]
