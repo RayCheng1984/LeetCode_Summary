@@ -143,3 +143,20 @@ def maxProfit(self, k: int, prices: List[int]) -> int:
                 buy[i] = max(buy[i], sell[i-1] - p)
                 sell[i] = max(sell[i], buy[i] + p)
         return sell[-1]
+309.买卖股票的最佳时机（含冷冻期）
+买卖股票2的变形，需要多记录一次状态
+def maxProfit(self, prices: List[int]) -> int:
+        buy, pre_sell, sell = -sys.maxsize, 0, 0
+        for p in prices:
+            buy = max(buy, pre_sell - p)
+            pre_sell = sell
+            sell = max(sell, buy + p)
+        return sell
+714.买卖股票（含手续费）
+每次买卖都需要手续费，减掉手续费就行
+def maxProfit(self, prices: List[int], fee: int) -> int:
+        buy, sell = -sys.maxsize, 0
+        for p in prices:
+            buy = max(buy, sell - p - fee)
+            sell = max(sell, buy + p)
+        return sell
