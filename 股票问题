@@ -133,7 +133,7 @@ def maxProfit(self, prices: List[int]) -> int:
             sell2 = max(sell2, buy2 + p)
         return sell2
 188.买卖股票的最佳时机4
-不限制买卖次数
+限制k笔交易
 def maxProfit(self, k: int, prices: List[int]) -> int:
         k = min(k, len(prices) // 2)
         buy = [-sys.maxsize] *(k+1)
