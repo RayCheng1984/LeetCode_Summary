@@ -12,3 +12,28 @@
 NO.23 合并k个排序链表
 ListNode list = new ListNode()初始化应该空节点，无值
 ListNode list = new ListNode(0)初始化应该节点值为0的空节点
+
+def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        amount = len(lists)
+        interval = 1
+        while interval < amount:
+            for i in range(0, amount - interval, interval *2):
+                lists[i] = self.mergeTwoLists(lists[i], lists[i + interval])
+            interval *= 2
+        return lists[0] if amount > 0 else None
+    
+    def mergeTwoLists(self, l1, l2):
+        head = point = ListNode(0)
+        while l1 and l2:
+            if l1.val <= l2.val:
+                point.next = l1
+                l1 = l1.next
+            else:
+                point.next = l2
+                l2 = l2.next
+            point = point.next
+        if not l1:
+            point.next = l2
+        else:
+            point.next = l1
+        return head.next
