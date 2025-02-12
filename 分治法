@@ -10,3 +10,5 @@
 4、问题分解的各个子问题相互独立，没有重复。
 
 NO.23 合并k个排序链表
+ListNode list = new ListNode()初始化应该空节点，无值
+ListNode list = new ListNode(0)初始化应该节点值为0的空节点
