@@ -12,28 +12,49 @@
 NO.23 合并k个排序链表
 ListNode list = new ListNode()初始化应该空节点，无值
 ListNode list = new ListNode(0)初始化应该节点值为0的空节点
-
+将K个链表进行两两合并，每轮过后k个链表被合并成k/2个链表，如果k是奇数，则将最后一个链表单独作为一对。
+重复上述过程，得到最终的有序链表共进行log2(k)轮合并
 def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        amount = len(lists)
-        interval = 1
+        amount = len(lists)#需要合并的长度
+        interval = 1#间隔从1开始，从此翻倍
         while interval < amount:
             for i in range(0, amount - interval, interval *2):
-                lists[i] = self.mergeTwoLists(lists[i], lists[i + interval])
-            interval *= 2
-        return lists[0] if amount > 0 else None
+                lists[i] = self.mergeTwoLists(lists[i], lists[i + interval])#两两合并，两个链表范围是从i以及i+interval
+            interval *= 2#间隔翻倍，假如放在里面到最后会超出范围
+        return lists[0] if amount > 0 else None#最后返回链表，只剩下一个链表
     
     def mergeTwoLists(self, l1, l2):
-        head = point = ListNode(0)
-        while l1 and l2:
+        head = point = ListNode(0)#建立节点值为0的空节点
+        while l1 and l2:#两个链表比较，较小的连接的链表后面
             if l1.val <= l2.val:
                 point.next = l1
-                l1 = l1.next
+                l1 = l1.next#每次结束链表需往后走
             else:
                 point.next = l2
                 l2 = l2.next
-            point = point.next
+            point = point.next#每次结束结果链表也向后加1
         if not l1:
             point.next = l2
         else:
             point.next = l1
+        return head.next#返回头节点的下一个节点
+
+NO.21 合并两个有序链表
+方法就是合并K个有序链表里面的函数，整体比较简单，建立空链表后将l1和l2中较小的依次插入，如果其中一个为空时，将剩下的合并到节点后面
+def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        head = point = ListNode(0)
+        while list1 and list2:
+            if list1.val <= list2.val:
+                point.next = list1
+                list1 = list1.next
+            else:
+                point.next = list2
+                list2 = list2.next
+            point = point.next
+        
+        if not list1:
+            point.next = list2
+        else:
+            point.next = list1
+        
         return head.next
