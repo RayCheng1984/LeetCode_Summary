@@ -66,4 +66,32 @@ cmp:可选参数，如果指定了就会使用该参数的方法进行排序
 key:指定使用待排序元素中的哪一项进行排序，比如说每个元素有多个数据域是
 reverse：默认False，升序排序；若要降序，reverse = True
 sorted是建立一个新的数组后排序，不会改变原数组。
-法二：
+法二：快速选择
+跟快速排序类似，选择pivot以后递归，但是只用选半边递归，当第k大元素在等于基准值的子数组中时，直接返回该元素
+def findKthLargest(self, nums: List[int], k: int) -> int:
+        def quick_select(nums, k):
+            pivot = random.choice(nums)#随机选择基准值
+            small, equal, big = [], [] , []#三路划分
+            for num in nums:
+                if num < pivot:
+                    small.append(num)
+                elif num > pivot:
+                    big.append(num)
+                else:
+                    equal.append(num)
+            if k <= len(big):#此时值在大于基准值的数组中
+                return quick_select(big, k)
+            if k > len(big) + len(equal):#
+                return quick_select(small, k - len(big) - len(equal))
+            return pivot
+        return quick_select(nums, k)
+此法使用了random包，部分公司面试不行
+
+法三：堆排序
+堆heap是一种具体的数据结构，优先级队列priority queue是一种抽象数据结构，可以通过堆、二叉搜索树、链表等多种方式实现优先级队列
+堆是一种特殊的完全二叉树，每个上级节点的值都小于等于它的下级节点
+add操作：添加元素到末尾，并且调整堆满足结构要求
+pop操作：弹出堆顶元素后，将末尾元素移到堆顶，然后继续调整知道满足结构要求。
+heapq使用列表实现堆
+heapq.heapify(x):将list x转换成堆，原地，线性时间
+heapq.heappush(heap, item):
