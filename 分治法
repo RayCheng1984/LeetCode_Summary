@@ -93,5 +93,11 @@ def findKthLargest(self, nums: List[int], k: int) -> int:
 add操作：添加元素到末尾，并且调整堆满足结构要求
 pop操作：弹出堆顶元素后，将末尾元素移到堆顶，然后继续调整知道满足结构要求。
 heapq使用列表实现堆
-heapq.heapify(x):将list x转换成堆，原地，线性时间
-heapq.heappush(heap, item):
+heapify(x):将无序list x转换成小根堆
+heappush(heap, item):将元素插入到序列尾端，然后从堆的最下向上调整，直到满足小顶堆结构
+heappop(heap):从序列中弹出最小值
+heappushpop(heap, item):先将item元素插入堆heapq中，然后弹出最小元素
+heapreplace(heap, item):先弹出最小元素，而后将item插入到heapq序列中
+merge(*iterables, key = None, reverse = False):将多个序列合并为一个堆，并且排序
+nlargest(n, iterable, key = None):从一个序列中取出最大的n个元素
+nsmallest(n, iterable, key = None):从一个序列中取出最小的n个元素
