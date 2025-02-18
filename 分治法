@@ -60,12 +60,14 @@ def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) ->
         return head.next
 
 NO.215 数组中的第k大元素
+
 法一：排序，然取第k大值
 sort(cmp = None, key = None, reverse = False)用于排序，直接对原列表进行排序，会改变原列表的顺序
 cmp:可选参数，如果指定了就会使用该参数的方法进行排序
 key:指定使用待排序元素中的哪一项进行排序，比如说每个元素有多个数据域是
 reverse：默认False，升序排序；若要降序，reverse = True
 sorted是建立一个新的数组后排序，不会改变原数组。
+
 法二：快速选择
 跟快速排序类似，选择pivot以后递归，但是只用选半边递归，当第k大元素在等于基准值的子数组中时，直接返回该元素
 def findKthLargest(self, nums: List[int], k: int) -> int:
