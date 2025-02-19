@@ -103,3 +103,10 @@ heapreplace(heap, item):先弹出最小元素，而后将item插入到heapq序�
 merge(*iterables, key = None, reverse = False):将多个序列合并为一个堆，并且排序
 nlargest(n, iterable, key = None):从一个序列中取出最大的n个元素
 nsmallest(n, iterable, key = None):从一个序列中取出最小的n个元素
+def findKthLargest(self, nums: List[int], k: int) -> int:
+        h = []#建立存储堆
+        for num in nums:
+            heapq.heappush(h, num)#入堆
+            if len(h) > k:#如果长度超过
+                heapq.heappop(h)#删除
+        return h[0]#返回堆顶，即数组的第一个值，即为第k大元素
