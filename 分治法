@@ -153,3 +153,11 @@ def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
             else:
                 return True
         return False 记下来
+
+bisect() = bisect_right()
+bisect_right()与bisect_left()的区别
+bisect_right(ls, x)：返回大于x的第一个下标
+bisect_left(ls, x)：返回大于等于x的第一个下标
+当列表中没有x：返回的是一样的
+当列表中只有一个元素等于X：bisect_left(ls, x)返回x的索引，bisect_right(ls, x)返回x的索引+1
+当列表中有多个元素等于X：bisect_left(ls, x)返回第一个x的索引，bisect_right(ls, x)返回最右边的那个索引加1
