@@ -2,3 +2,22 @@
 不断重复同样的操作直到问题得到解决，此时的解为全局最优解。
 
 NO.455 分发饼干
+孩子方面：胃口小的孩子优先考虑，被成功分配的概率高，有利于提高总体被满足的孩子数
+饼干方面：当一个孩子能被多个饼干满足时，应该选择最小的一块饼干
+对g, s都进行排序，当孩子和饼干都没有遍历完时，若饼干>胃口，则res+1, 孩子+1，饼干+1
+否则饼干+1，最后返回res
+def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+        res = 0
+        i =  j = 0
+        while i < len(g) and j < len(s):
+            if s[j] >= g[i]:
+                res += 1
+                i += 1
+                j += 1
+            else:
+                j += 1
+        return res
+
+NO.55 跳跃游戏
