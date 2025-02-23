@@ -21,3 +21,22 @@ def findContentChildren(self, g: List[int], s: List[int]) -> int:
         return res
 
 NO.55 跳跃游戏
+法一：贪心法
+依次遍历数组中的每个位置，并维护一个可以到达的最远位置。对于当前位置x，如果它在可以到达的最远位置之内，则可以从起点通过若干次跳跃到达该位置。
+在遍历过程中，如果可以到达的最远位置大于等于数组的最后一个位置，则返回True。如果在遍历结束后，最后一个位置仍然不可达，则返回False.
+def canJump(self, nums: List[int]) -> bool:
+        n, reach = len(nums), 0
+        for i in range(n):
+            if i <= reach: #确保当前位置可达
+                reach = max(reach, i + nums[i])
+                if reach >= n - 1:
+                    return True
+        return False
+另一种写法
+def canJump(self, nums: List[int]) -> bool:
+        reach = 0
+        for i in range(len(nums)):
+            if i > reach:
+                return False
+            reach = max(reach, i + nums[i])
+        return True
