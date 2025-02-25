@@ -74,3 +74,5 @@ def leastInterval(self, tasks: List[str], n: int) -> int:
             if m == count[i]:
                 c += 1
         return max(len(tasks), (m-1)*(n+1) + c)
+
+NO.135 分发糖果
