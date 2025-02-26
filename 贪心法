@@ -34,8 +34,8 @@ def canJump(self, nums: List[int]) -> bool:
         return False
 另一种写法
 def canJump(self, nums: List[int]) -> bool:
-        reach = 0
-        for i in range(len(nums)):
+        n, reach = len(nums), 0
+        for i in range(n):
             if i > reach:
                 return False
             reach = max(reach, i + nums[i])
