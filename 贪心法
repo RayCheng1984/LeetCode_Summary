@@ -76,3 +76,27 @@ def leastInterval(self, tasks: List[str], n: int) -> int:
         return max(len(tasks), (m-1)*(n+1) + c)
 
 NO.135 分发糖果
+*注意：left = right =[1] * len(ratings)与left, right = [1] * len(ratings), [1] * len(ratings)不一样
+前者两个名字指向同一个对象，没有产生新的list，只是新增了一个引用，两个指向同一个内存地址，一个改变会影响另外一个。
+list[:]浅拷贝，使用切片方法完整拷贝整个数组
+直接赋值：其实就是对象的引用（别名）
+浅拷贝：只拷贝了一层，只拷贝父对象，不拷贝对象内部的子对象（即子对象是引用）。浅拷贝是按位拷贝，会创建一个新对象，这个对象有原始对象的一份精确拷贝。
+里面的属性如果是基本类型，拷贝的就是基本类型的值；但若属性是内存地址，拷贝的就是内存地址，因此如果其中一个对象改变了这个地址的内容就会影响到另外一个对象。
+深拷贝：copy模块下的deepcopy方法，完全拷贝了父对象及其子对象，两者完全独立）。深拷贝会拷贝所有属性，深拷贝相比浅拷贝速度较慢且花销较大。
+因此对于不可变对象，浅拷贝和深拷贝作用一样，相当于复制了一份，
+def candy(self, ratings: List[int]) -> int:
+        n = len(ratings)
+        left, right = [1] * n, [1] * n
+        ans = 0
+        for i in range(1, n):
+            if ratings[i] > ratings[i-1]:
+                left[i] = left[i-1] + 1
+        for i in range(n-2, -1, -1):
+            if ratings[i] > ratings[i+1]:
+                right[i] = right[i+1] + 1
+        for i in range(n):
+            ans += max(left[i], right[i])
+        
+        return ans
+
+NO.435 无重叠区间
