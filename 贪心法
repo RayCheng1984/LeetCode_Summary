@@ -118,3 +118,13 @@ def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         return len(intervals) - count
 
 NO.452 用最少数量的箭引爆气球
+思路同NO.435，不用管Y轴，只看X轴。先进行排序，只要当前终端跟下一个气球的左端点不重合，就
+def findMinArrowShots(self, points: List[List[int]]) -> int:
+        points.sort(key = lambda x: x[1]) #按照右端点结束顺序排序
+        count = 1
+        end = points[0][1] #初始终点为排序后第一个元素的右端点
+        for i in range(1, len(points)):
+            if end < points[i][0]: #气球不接触
+                count += 1
+                end = points[i][1]  #终点变为当前结点的右端点
+        return count
