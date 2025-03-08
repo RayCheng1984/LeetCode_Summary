@@ -1,3 +1,39 @@
 NO.39 组合总和I
+回溯法的模板：
+def dfs(index, cur, path):
+    if cur == target: #结束条件有两个：1找到解，2搜索完毕
+        ans.append(path.copy())
+        return
+    if index == n:
+        return
+    
+    for num in nums:#考虑可能的解，进入下一层递归
+        if num == error or num in visited: #忽略非法解
+            continue
+        visited.add(num)#更新状态，添加到访问记录里
+        path.append(num)
+        dfs(index + 1, cur + num, path)
+        path.pop()#恢复状态
+        visited.remove(num)
+其中index是数组的位置信息，cur表示当前路径上的某个信息，在这个题里就是target每次减去上次选的那个数，path是路径
+
+def dfs(index, cur, path):
+            if cur == 0:#递归结束有两个条件，1是找到解，2是搜索完毕
+                ans.append(path[:])
+                return
+            if index == n:
+                return
+            
+            if candidates[index] <= cur: #加入这个数字，其中cur在这里指target减去上一个选择的数剩下的值
+                path.append(candidates[index]) 
+                dfs(index, cur - candidates[index], path) #index不变，继续考虑当前数字
+                path.pop() #消除影响
+
+            dfs(index + 1, cur, path)#不加入当前数字，那么考虑下一个数字
+        
+        ans = []
+        n = len(candidates)
+        dfs(0, target, [])
+        return ans
 
 NO.40 组合总和II
