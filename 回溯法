@@ -17,6 +17,7 @@ def dfs(index, cur, path):
         visited.remove(num)
 其中index是数组的位置信息，cur表示当前路径上的某个信息，在这个题里就是target每次减去上次选的那个数，path是路径
 
+法一：
 def dfs(index, cur, path):
             if cur == 0:#递归结束有两个条件，1是找到解，2是搜索完毕
                 ans.append(path[:])
@@ -35,5 +36,54 @@ def dfs(index, cur, path):
         n = len(candidates)
         dfs(0, target, [])
         return ans
+
+法二：
+回溯三问：1、当前操作：枚举path[i]要填入的字母；2、子问题：构造字符串>=i的部分；3、下一个子问题
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+        path = []
+        candidates.sort() #排序后可以进行剪枝优化
+
+        def dfs(i, left): #left表示剩下的
+            if left == 0:
+                ans.append(path.copy()) #是一条路径，复制后添加到答案中，每次都要复制一下，因为每条路径都是一个数组
+                return
+            if i == len(candidates) or left < candidates[i]: #遍历到最后或者剩下的数都太大，无法凑成则结束
+                return
+            
+            path.append(candidates[i]) #选了该数，则添入路径
+            dfs(i, left - candidates[i]) #选之后继续向下递归，此时left变了要减去当前值
+            path.pop() #恢复现场
+
+            dfs(i+1, left) #不选
+        dfs(0, target) #递归入口
+        return ans
+
+子集型回溯两种模板：
+一、站在输入角度
+ans = []
+path = []
+n = len(nums)
+def dfs(i):
+    if i == n:
+        ans.append(path.copy)
+        return
+        path.append(nums[i])
+        dfs(i+1)
+        path.pop()
+二、答案角度
+ans = []
+path = []
+n = len(nums)
+def dfs(i):
+    ans.append(path.copy())
+    if i == n:
+    return
+    for j in range(i, n):
+        path.append(nums[i])
+        dfs(i+1)
+        path.pop()
+dfs(0)
+return ans
 
 NO.40 组合总和II
