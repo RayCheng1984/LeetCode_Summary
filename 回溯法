@@ -87,3 +87,54 @@ dfs(0)
 return ans
 
 NO.40 组合总和II
+整体类似组合总和I，但是因为不能包含重复组合，所以需稍加改变
+def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+        path = []
+        candidates.sort() #排序有利于剪枝
+
+        def dfs(i, left):
+            if left == 0: #找到答案，将该路径保存
+                ans.append(path.copy())
+                return
+            if i == len(candidates) or left < candidates[i]: #没有可以选的数字无法凑成target，返回
+                return
+            
+            path.append(candidates[i]) #选
+            dfs(i+1, left - candidates[i]) #因为数字不能重复，深度遍历去掉当前数字
+            path.pop() #恢复现场
+
+            temp = candidates[i] #用变量保存当前值，因为要与后面的值比较
+            i += 1
+            while i < len(candidates) and  candidates[i] == temp: #当下个值与当前值相等
+                i += 1 #考虑下个变量
+            dfs(i, left) #对改变后的值进行遍历
+        
+        dfs(0, target) #遍历入口
+        return ans
+
+def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+        path = []
+        candidates.sort() #排序有利于剪枝
+
+        def dfs(i, left):
+            if left == 0: #找到答案，将该路径保存
+                ans.append(path.copy())
+                return
+            if i == len(candidates) or left < candidates[i]: #没有可以选的数字无法凑成target，返回
+                return
+            
+            path.append(candidates[i]) #选
+            dfs(i+1, left - candidates[i]) #因为数字不能重复，深度遍历去掉当前数字
+            path.pop() #恢复现场
+
+            j = i+1 #不选
+            while j < len(candidates) and candidates[j] == candidates[i]: #用变量j代替进行比较
+                j += 1
+            dfs(j, left)
+        
+        dfs(0, target) #遍历入口
+        return ans
+
+NO.78 子集
