@@ -60,7 +60,7 @@ def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         return ans
 
 子集型回溯两种模板：
-一、站在输入角度
+一、选不选
 ans = []
 path = []
 n = len(nums)
@@ -71,7 +71,7 @@ def dfs(i):
         path.append(nums[i])
         dfs(i+1)
         path.pop()
-二、答案角度
+二、枚举选哪个
 ans = []
 path = []
 n = len(nums)
