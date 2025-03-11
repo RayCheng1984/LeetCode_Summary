@@ -177,3 +177,35 @@ def subsets(self, nums: List[int]) -> List[List[int]]:
         return ans
 
 NO.46 全排列
+法一：调用库函数
+itertools.permutaions()是python itertools模块中的一个函数，用于生成给定可迭代对象的所有可能排列
+itertools.permuations(iterable, r = None):iterable要生成排列的可迭代对象，如列表、元组、字符串等； r为排列的长度，如果未指定，默认与iterable长度相同
+def permute(self, nums: List[int]) -> List[List[int]]:
+        return list(itertools.permutations(nums))
+
+法二：全排列函数的实现
+def permute(nums):  
+    def backtrack(start, end):  
+        if start == end:  
+            result.append(nums[:])  
+        for i in range(start, end):  
+            nums[start], nums[i] = nums[i], nums[start]  
+            backtrack(start + 1, end)  
+            nums[start], nums[i] = nums[i], nums[start]  
+  
+    result = []  
+    backtrack(0, len(nums))  
+    return result
+法三：
+当递归到最深层时，将当前排列的副本加入结果列表
+def permute(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        def dfs(i): #在每层递归中，固定一个i位置的元素
+            if i == len(nums):
+                ans.append(nums.copy())
+            for j in range(i, len(nums)):
+                nums[i], nums[j] = nums[j], nums[i]#将i位置的元素与后续元素交换
+                dfs(i+1)#递归处理下一个位置i+1
+                nums[i], nums[j] = nums[j], nums[i]#
+        dfs(0)
+        return ans
