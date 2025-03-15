@@ -209,3 +209,15 @@ def permute(self, nums: List[int]) -> List[List[int]]:
                 nums[i], nums[j] = nums[j], nums[i]#
         dfs(0)
         return ans
+回溯法解题模板：
+void backtrack(参数){
+    if (终止条件){
+        存放结果;
+        return;
+}
+    for(选择：本层集合中的元素){
+        处理节点;
+        backtrack(参数);
+        撤销处理;
+}
+}
