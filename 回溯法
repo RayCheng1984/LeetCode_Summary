@@ -184,19 +184,19 @@ def permute(self, nums: List[int]) -> List[List[int]]:
         return list(itertools.permutations(nums))
 
 法二：全排列函数的实现
-def permute(nums):  
-    def backtrack(start, end):  
-        if start == end:  
-            result.append(nums[:])  
-        for i in range(start, end):  
-            nums[start], nums[i] = nums[i], nums[start]  
-            backtrack(start + 1, end)  
-            nums[start], nums[i] = nums[i], nums[start]  
-  
-    result = []  
-    backtrack(0, len(nums))  
-    return result
+def permute(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        def dfs(start, end):
+            if start == end:#两个指针重合，意味着已经填满所有位置，添加该组合
+                ans.append(nums.copy())
+            for i in range(start, end):
+                nums[start], nums[i] = nums[i], nums[start]#交换位置
+                dfs(start + 1, end)#两个参数，从start+1到end
+                nums[start], nums[i] = nums[i], nums[start]#恢复现场
+        dfs(0, len(nums))
+        return ans
 法三：
+从第一个位置开始，依次将每个数字放在当前位置；对于每个放置的数字，递归的生成剩余数字的全排列；当所有位置都填满后，得到一个完整的排列，将其添加到结果中；然后回溯到上一步，尝试其他可能性。
 当递归到最深层时，将当前排列的副本加入结果列表
 def permute(self, nums: List[int]) -> List[List[int]]:
         ans = []
@@ -206,9 +206,10 @@ def permute(self, nums: List[int]) -> List[List[int]]:
             for j in range(i, len(nums)):
                 nums[i], nums[j] = nums[j], nums[i]#将i位置的元素与后续元素交换
                 dfs(i+1)#递归处理下一个位置i+1
-                nums[i], nums[j] = nums[j], nums[i]#
+                nums[i], nums[j] = nums[j], nums[i]#恢复现场
         dfs(0)
         return ans
+法二和法三本质上一样，只是将一个交换参数放在函数内部
 回溯法解题模板：
 void backtrack(参数){
     if (终止条件){
@@ -221,3 +222,5 @@ void backtrack(参数){
         撤销处理;
 }
 }
+
+NO.37 解数独
