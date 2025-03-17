@@ -240,10 +240,10 @@ def permute(self, nums: List[int]) -> List[List[int]]:
         def dfs(i):
             if i == n:
                 ans.append(path.copy())
-            for j in range(n): #枚举下标
-                if not flag[j]:#没有选
+            for j in range(n): #注意这里枚举的是没有选择的数，下标为j; i为排列的第i个位置
+                if not flag[j]:#没有选j
                     path[i] = nums[j] #则选之
-                    flag[j] = True #标记为已选
+                    flag[j] = True #j标记为已选
                     dfs(i+1) #递归下一个
                     flag[j] = False #恢复现场
         dfs(0)
