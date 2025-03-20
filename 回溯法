@@ -1,21 +1,16 @@
 NO.39 组合总和I
-回溯法的模板：
-def dfs(index, cur, path):
-    if cur == target: #结束条件有两个：1找到解，2搜索完毕
-        ans.append(path.copy())
-        return
-    if index == n:
-        return
-    
-    for num in nums:#考虑可能的解，进入下一层递归
-        if num == error or num in visited: #忽略非法解
-            continue
-        visited.add(num)#更新状态，添加到访问记录里
-        path.append(num)
-        dfs(index + 1, cur + num, path)
-        path.pop()#恢复状态
-        visited.remove(num)
-其中index是数组的位置信息，cur表示当前路径上的某个信息，在这个题里就是target每次减去上次选的那个数，path是路径
+回溯法解题模板：
+void backtrack(参数){
+    if (终止条件){
+        存放结果;
+        return;
+}
+    for(选择：本层集合中的元素){
+        处理节点;
+        backtrack(参数);
+        撤销处理;
+}
+}
 
 法一：
 def dfs(index, cur, path):
@@ -165,6 +160,7 @@ def subsets(self, nums: List[int]) -> List[List[int]]:
             for j in range(len(ans)):
                 ans.append(ans[j] + [nums[i]]) #每次循环将之前数组复制一遍，在复制的里面加入当前数字，再添加到答案数组后面
         return ans
+
 法三：二进制
 <<左移，相当于乘以2^i, >>右移，相当于除以2^i
 (s >> i) & 1 = 1判断该元素属于集合，(s >> i) & 1 = 0该元素不属于集合
@@ -177,6 +173,7 @@ def subsets(self, nums: List[int]) -> List[List[int]]:
         return ans
 
 NO.46 全排列
+
 法一：调用库函数
 itertools.permutaions()是python itertools模块中的一个函数，用于生成给定可迭代对象的所有可能排列
 itertools.permuations(iterable, r = None):iterable要生成排列的可迭代对象，如列表、元组、字符串等； r为排列的长度，如果未指定，默认与iterable长度相同
@@ -249,17 +246,37 @@ def permute(self, nums: List[int]) -> List[List[int]]:
         dfs(0)
         return ans
 
-回溯法解题模板：
-void backtrack(参数){
-    if (终止条件){
-        存放结果;
-        return;
-}
-    for(选择：本层集合中的元素){
-        处理节点;
-        backtrack(参数);
-        撤销处理;
-}
-}
-
-NO.37 解数独
+NO.37 解数独(直接看代码注释）
+大致思路：找出需要填写的位置，然后遍历填数，符合条件就从可用数组删去对应的数，然后回溯下一个
+def solveSudoku(self, board: List[List[str]]) -> None:
+        row = [set(range(1,10)) for _ in range(9)]#行剩余可用数字
+        col = [set(range(1,10)) for _ in range(9)]#列剩余可用数字
+        block = [set(range(1,10)) for _ in range(9)]#块剩余可用数字
+        empty = []#需要填数的位置
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != '.':#假如当前位置已经有数字
+                    val = int(board[i][j])#因为存的是字符串，将字符串转换成数字
+                    row[i].remove(val)#从该行、该列、该块中删除对应数字，因为已经不能用了
+                    col[j].remove(val)
+                    block[(i//3)*3 + j//3].remove(val)#块的计算公式(i//3)*3 + j//3
+                else:
+                    empty.append((i,j))#否则，如果为空，将需要填数的位置添加进来
+        
+        def backtrack(iter = 0):#iter是当前处理的empty列表的索引
+            if iter == len(empty):#如果索引和空位置数一样，说明找到答案，直接返回
+                return True
+            i, j = empty[iter]#iter是列表的索引，里面存的是一对数, i,j分别是第一个数和第二个数
+            b = (i//3)*3 + j//3 #块数
+            for val in row[i] & col[j] & block[b]: #当一个数同时在需要填的行、列、块中时，则放入该数字
+                row[i].remove(val)#同时删去对应行、列、块中该数字
+                col[j].remove(val)
+                block[b].remove(val)
+                board[i][j] = str(val)#在i,j位置放入数字，但需转换成字符串
+                if backtrack(iter + 1):#选择，则回溯下一个数字，如果一直可以，则一直返回True，最中iter == len(empty)返回真
+                    return True
+                row[i].add(val)#如果不行，撤销操作，将数加回对应的行、列、块
+                col[j].add(val)
+                block[b].add(val)
+            return False
+        backtrack()
