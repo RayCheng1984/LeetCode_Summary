@@ -1,1 +1,10 @@
 NO.229 求众数II
+法一：直接统计，如果大于1/3，加入到答案里面，缺点是不满足空间复杂度为O(1)
+def majorityElement(self, nums: List[int]) -> List[int]:
+        ans = []
+        counter = Counter(nums)
+        for item in counter.keys():
+            if counter[item] > len(nums) // 3:
+                ans.append(item)
+        return ans
+法二：摩尔投票法
