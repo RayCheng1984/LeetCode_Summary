@@ -80,3 +80,21 @@ NO.84 柱状图中最大的矩形
 单调栈思路：求每条柱子可以向左右延伸的长度（得到宽度），然后乘以柱子高度，得到面积
 寻找柱子左/右边首个严格小于height[i]的柱子，维护一个单调递增栈（栈底——>栈顶），每当遇到新加入的元素<栈顶便可确定柱子右边界，
 左边界就是栈顶柱子下面的柱子
+本题引入了哨兵，在前后多加了一个高度为0的柱子，避免每次判断边界条件。
+def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights) + 2 #加了两个哨兵
+        new_heights = [0] * n 
+        for i in range(1, n-1):#将新数组中的高度置为原高度，注意下标往后挪了一个
+            new_heights[i] = heights[i-1]
+        stack = []#单调递增栈
+        ans = 0
+        for i in range(n):#遍历新数组
+            while stack and new_heights[i] < new_heights[stack[-1]]:#栈不为空且当前柱子<栈顶柱子
+                pop_index = stack.pop()#右边界为索引为i的柱子（不含），左边界为栈顶元素下面的索引
+                w = i - stack[-1] - 1
+                h = new_heights[pop_index]#栈顶元素对应高度是矩形高度
+                ans = max(ans, w*h)
+            stack.append(i)#当前索引入栈
+        return ans
+
+NO.1185 一周中的第几天
