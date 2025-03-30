@@ -105,7 +105,8 @@ def dayOfTheWeek(self, day: int, month: int, year: int) -> str:
         months = [31,28,31,30,31,30,31,31,30,31,30]#每月天数，12月可以不需要，因为最后一个
         days = 0
         days += 365*(year-1971) + (year-1969) // 4 #今年之前的天数，减去1969是因为1972是闰年，但这个闰会加在月份上，往后的闰年则多一天
-        days += sum(months[:month-1])#加上今年本月之前的天数
+        for i in range(month - 1): #加上今年本月之前的天数
+            days += months[i]
         if (year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)) and month >= 3:#如果闰年3月以后，加一天
             days += 1
         days += day #加上本月天数
