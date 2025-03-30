@@ -111,4 +111,29 @@ def dayOfTheWeek(self, day: int, month: int, year: int) -> str:
             days += 1
         days += day #加上本月天数
         return week[days % 7] #取余，返回值
-法二：
+法二：直接调库
+datetime.date表示日月年
+datetime.time表示小时、分钟、秒、毫秒
+datetime.datetime覆盖日期和时间两类
+datetime.timedelta:时间间隔
+datetime.tzinfo:时区有关
+datetime.datime(year, month, day)获取当前的年月日，再用strftime()格式化控制符
+strftime("%A")星期，（“%a")星期缩写
+def dayOfTheWeek(self, day: int, month: int, year: int) -> str:
+        return datetime.datetime(year, month, day).strftime("%A")
+法三：蔡勒公式（只适用于1582年格里高利历改革之后的年份）
+w = ((c//4) - 2c  + y + (y//4) + (13(m+1)//5) + d - 1)mod 7
+w:星期，从Sunday开始，且只能从星期天开始
+c:年份前两位
+y:年份后两位
+m:月，范围是3——14，某年的1、2月要看成上一年的13、14月
+d:日
+def dayOfTheWeek(self, day: int, month: int, year: int) -> str:
+        week = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        if month <= 2: #月份要先处理，年份可能会减，会影响c和y的值
+            month += 12
+            year -= 1
+        c = year // 100
+        y = year % 100
+        w = (c // 4  - 2*c + y + y//4 + 13*(month + 1) // 5 + day - 1) % 7 #蔡勒公式代入求值
+        return week[w]
