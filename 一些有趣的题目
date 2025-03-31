@@ -137,3 +137,14 @@ def dayOfTheWeek(self, day: int, month: int, year: int) -> str:
         y = year % 100
         w = (c // 4  - 2*c + y + y//4 + 13*(month + 1) // 5 + day - 1) % 7 #蔡勒公式代入求值
         return week[w]
+
+NO.365 水壶问题
+法一：
+裴蜀（贝祖）定理：对于两个整数a、b，它们的最大公约数d可以表示成a和b的线性组合。即一定存在x和y，使得ax+by = d
+ax+by=z有解要求z是x,y的最大公约数的倍数
+def canMeasureWater(self, x: int, y: int, target: int) -> bool:
+        if x + y < target:#小于不行
+            return False
+        if x + y == target or x == target or y == target:
+            return True
+        return target % math.gcd(x, y) == 0 #裴蜀定理，求x,y的最大公约数，只要target是它的倍数就可以
