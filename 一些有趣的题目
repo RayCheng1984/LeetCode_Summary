@@ -167,3 +167,5 @@ def canMeasureWater(self, x: int, y: int, target: int) -> bool:
                     queue.appendleft(item)#从对头加入队列里，此处一定要从对头加，否则用deque没有意义，且会超时
                     visited.add(item)#添加对访问名单里
         return False
+
+NO.458 可怜的小猪
