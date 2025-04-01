@@ -148,3 +148,22 @@ def canMeasureWater(self, x: int, y: int, target: int) -> bool:
         if x + y == target or x == target or y == target:
             return True
         return target % math.gcd(x, y) == 0 #裴蜀定理，求x,y的最大公约数，只要target是它的倍数就可以
+
+法二：BFS广度优先
+deque():双端队列,将数据插入指定位置,appendleft(item)将数据添加在队列的头部,pop()是从队尾弹出元素并作为返回值
+def canMeasureWater(self, x: int, y: int, target: int) -> bool:
+        queue = deque([(0,0)])#外括号是deque()方法，[]是因为队列的存储结构，内部()是元组存储每组水壶情况
+        visited = set([(0,0)])
+        while queue:
+            cur_x, cur_y = queue.pop()#当前水量，分别是元组的第一个和第二个值，从队尾弹出
+            if target in [cur_x, cur_y, cur_x + cur_y]:#只要target出现在当前水量的组合里，则成功
+                return True
+            for item in [
+                (x, cur_y), (cur_x, y),#壶分别加满水
+                (0, cur_y), (cur_x, 0),#壶分别倒空水
+                (cur_x + cur_y - y, y) if cur_x + cur_y >= y else (0, cur_x + cur_y),#倒满y水壶：一种是加满，一种是加不满
+                (x, cur_x + cur_y - x) if cur_x + cur_y >= x else (cur_x + cur_y, 0)]:#倒满x水壶：一种是加满，一种加不满
+                if item not in visited:#只要这些情况没有遇到过
+                    queue.appendleft(item)#从对头加入队列里，此处一定要从对头加，否则用deque没有意义，且会超时
+                    visited.add(item)#添加对访问名单里
+        return False
