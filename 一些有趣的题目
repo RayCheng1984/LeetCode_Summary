@@ -169,3 +169,13 @@ def canMeasureWater(self, x: int, y: int, target: int) -> bool:
         return False
 
 NO.458 可怜的小猪
+法一：数学方法
+可以喝水的次数 = minutesToTest / minutesToDie
+包含的信息量 = 喝水次数 + 1
+每只小猪为一个维度，共有信息量^猪的次方个点，每个点确定一个位数。
+def poorPigs(self, buckets: int, minutesToDie: int, minutesToTest: int) -> int:
+        count = 0
+        while (minutesToTest // minutesToDie + 1) ** count < buckets:
+            count += 1
+        return count
+这个代码思路还是数学方法，但是少了取对数的误差，更准确。
