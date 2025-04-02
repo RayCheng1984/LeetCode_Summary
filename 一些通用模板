@@ -1,0 +1,50 @@
+1、
+普通二分法
+def binary_search(nums, target):
+    n = len(target)
+    left, right = 0, n-1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+二分法变种
+在有序数组中查找第一个大于等于x的元素，该元素必定存在
+def binary_search(nums, x):
+    n = len(nums)
+    left, right = 0, n-1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if left == right:
+            break
+        elif nums[mid] < x:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]
+
+在有序数组中查找最后一个小于等于x的元素，该是元素必定存在
+def binary_search(nums, x):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if left == right or left + 1 == right:
+            break
+        elif nums[mid] < x:
+            left = mid
+        else:
+            right = mid - 1
+    if nums[right] <= x:
+        return nums[right]
+    else:
+        return nums[left]
+
+2、回溯法
+回溯法通常用递归实现，递归要考虑3个方面，搜索的设计、递归状态、递归结束条件
+搜索设计：划分求解空间，让每一层递归都尝试搜索一部分解空间，直至搜索完
+递归状态：
