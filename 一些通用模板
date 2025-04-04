@@ -47,4 +47,48 @@ def binary_search(nums, x):
 2、回溯法
 回溯法通常用递归实现，递归要考虑3个方面，搜索的设计、递归状态、递归结束条件
 搜索设计：划分求解空间，让每一层递归都尝试搜索一部分解空间，直至搜索完
-递归状态：
+递归状态：状态用来区分不同递归，一般至少有当前位置index这种状态，可能还会携带当前路径path已经当前状态cur等信息。
+递归结束条件：找到可行解或者搜索完毕都可以结束。
+def dfs(index, cur, path):
+    if cur == target:
+        ans.append(path.copy())
+    if index == n:
+        return
+    for num in nums:
+        if num == error or num in visited:
+            continue
+        visited.add(num)
+        path.append(num)
+        dfs(index + 1, cur + num, path)
+        path.pop()
+        visited.remove(num)
+
+3、并查集
+并查集是一种树形结构，用来处理一些不相交集合的查询和合并问题。需要快速连接任意两个点，并且判断任意两个点是否连通时，可以使用并查集模板实现。
+
+4、BFS广度优先搜索
+基于队列的广度优先比哪里，将起始节点放入队列中，循环遍历队列中的节点，扩展节点相邻的有效节点，并将其放入队列中
+from collections import deque
+grid ==[[0]*5 for _ in range(5)]
+n, m = len(grid), len(grid[0])
+direction = [[0,1], [0,-1],[-1,0],[1,0]]
+visited = [[False for _ in range(m)] for _ in range(n)]
+queue = deque()
+level = 0
+queue.append([(0,0)])
+visited[0][0] = True
+while len(queue) > 0:
+    size = len(queue)
+    for _ in range(size):
+        top = queue.popleft()
+        x, y = top[0], top[1]
+        for d in direction:
+            next_x = x + d[0]
+            next_y = y + d[1]
+            if (next_x < 0 or next_x >=n or next_y < 0 or next_y >=m):
+                continue
+            queue.append([next_x, next_y])
+            visited[next_x][next_y] = True
+level += 1
+
+5、滑动窗口
