@@ -92,3 +92,90 @@ while len(queue) > 0:
 level += 1
 
 5、滑动窗口
+借助双指针表示左右边界，并不断移动指针，搜索可能存在的有效值。
+
+滑动窗口I
+窗口固定大小，最优解与窗口大小无关
+初始化大小为len的滑动窗口——检查窗口是否满足条件，更新最优解——循环移动直至抵达边界。
+cnt = {0 for _ in range(max(nums))}
+ans = 0
+for i in range(init_len):
+    num = nums[i]
+    cnt[num] += 1
+left, right = 0, init_len
+if check(cnt):
+    ans = get(left, right)
+while right < len(nums):
+    num, num2 = nums[left], nums[right]
+    cnt[num] -= 1
+    cnt[num2] += 1
+    if check(cnt):
+        ans = max(ans, get(left, right))
+left += 1
+right += 1
+
+滑动窗口II
+窗口不固定，最优解为最小窗口
+初始化大小为0的滑动窗口——右指针移动一步，看是否满足条件，是的话则继续移动左指针，缩小窗口直至不符合条件，更新最优解
+left, right = 0, 0
+cnt = {0 for _ in range(max(nums))}
+ans = len(nums)
+while right < len(nums):
+    num = nums[right]
+    cnt[num] += 1
+    while left <= right and check(cnt):
+        ans = min(ans, right - left + 1)
+        num = nums[left]
+        cnt[left] -= 1
+        left += 1
+    right += 1
+
+滑动窗口III
+窗口大小不固定，最优解为最大窗口
+初始化大小为0的滑动窗口——右指针移动检查窗口是否不满足条件，是则向右移动左指针，直到满足条件，更新最优解
+left, right = 0, 0
+cnt = {0 for _ in range(max(nums))}
+ans = 0
+while right < len(nums):
+    num = nums[right]
+    cnt[num] += 1
+    while not check(cnt):
+        num = nums[left]
+        cnt[num] -= 1
+        left += 1
+    ans = max(ans, right - left + 1)
+    right += 1
+
+6、数学
+素数
+法一：开根号法
+素数只能被1和它本身整除，非素数处理它们之外，至少还有两个除数a、b，判断某个数是否为素数，可在[2, num - 1]区间查找是否存在num的除数
+其中a、b是相互配对的，且必然有一个小，只需搜索[2, min]即可，求最小数的最大值，小数*大数=n，为了让小数尽可能大，最后变成小数*小数=n，小数的最大值为根号n
+def isPrime(n):
+    if n <= 1:
+        return False
+    i = 2
+    while i*i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+法二：埃氏筛法
+利用素数的倍数是合数，从小到大遍历每个数字，如果是素数，筛掉其倍数
+以布尔数组来记录，并通过标记数组元素为False来模拟筛掉操作。
+def countPrime(n):
+    if n <= 1:
+        return 0
+    tmp = [True for i in range(n)]
+    ans = 0
+    tmp[0] = False
+    tmp[1] = False
+    for i in range(2, n):
+        if not tmp[i]:
+            continue
+        for j in range(i*i, n, i):
+            tmp[j] = False
+    for i in range(n):
+        if tmp[i]:
+            ans += 1
+    return ans
