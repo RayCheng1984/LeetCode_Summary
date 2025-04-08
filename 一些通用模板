@@ -151,19 +151,19 @@ while right < len(nums):
 法一：开根号法
 素数只能被1和它本身整除，非素数处理它们之外，至少还有两个除数a、b，判断某个数是否为素数，可在[2, num - 1]区间查找是否存在num的除数
 其中a、b是相互配对的，且必然有一个小，只需搜索[2, min]即可，求最小数的最大值，小数*大数=n，为了让小数尽可能大，最后变成小数*小数=n，小数的最大值为根号n
-def isPrime(n):
-    if n <= 1:
+def isPrime(n):#这个是判断某个数是不是质数
+    if n <= 1:#n小于等于1没有质数
         return False
-    i = 2
-    while i*i <= n:
-        if n % i == 0:
+    i = 2#从2开始遍历
+    while i*i <= n:#遍历到根号n
+        if n % i == 0:#如果某个数是n的因数，返回False
             return False
-        i += 1
-    return True
+        i += 1#继续遍历下一个数
+    return True#遍历完成，没有返回False，则返回True
 法二：埃氏筛法
 利用素数的倍数是合数，从小到大遍历每个数字，如果是素数，筛掉其倍数
 以布尔数组来记录，并通过标记数组元素为False来模拟筛掉操作。
-def countPrime(n):
+def countPrime(n):#统计质数的数量
     if n <= 1:#n小于等于1时无质数
         return 0
     flag = [True for _ in range(n)]#初始化标记数组，flag[i]为True表示i是质数
@@ -178,3 +178,5 @@ def countPrime(n):
         if flag[i]:
             ans += 1
     return ans
+
+法三：欧拉筛法
