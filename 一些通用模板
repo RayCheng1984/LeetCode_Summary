@@ -164,18 +164,17 @@ def isPrime(n):
 利用素数的倍数是合数，从小到大遍历每个数字，如果是素数，筛掉其倍数
 以布尔数组来记录，并通过标记数组元素为False来模拟筛掉操作。
 def countPrime(n):
-    if n <= 1:
+    if n <= 1:#小于等于1，无质数
         return 0
-    tmp = [True for i in range(n)]
+    tmp = [True for _ in range(n)]#初始化标记数组，tmp[i]为True表示i是质数
     ans = 0
-    tmp[0] = False
-    tmp[1] = False
-    for i in range(2, n):
-        if not tmp[i]:
+    tmp[0] = tmp[1] = False#0和1不是质数，标记为false
+    for i in range(2,n):#从2开始，一直到最后
+        if not tmp[i]:#被标记为合数，跳过后续操作
             continue
-        for j in range(i*i, n, i):
+        for j in range(i*i, n, i):#从i*i开始，将i的所有倍数标记为合数
             tmp[j] = False
     for i in range(n):
-        if tmp[i]:
+        if tmp[i]:#统计标记为True的数量
             ans += 1
     return ans
