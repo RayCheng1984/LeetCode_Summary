@@ -167,7 +167,6 @@ def countPrime(n):
     if n <= 1:#0和1不是素数
         return []
     flag = [True for _ in range(n+1)] #建立标记数组
-    flag[0] = flag[1] = False
     ans = []
     i = 2
     while i*i <= n:#从2开始，循环到sqrt(n)
@@ -181,3 +180,17 @@ def countPrime(n):
     return ans
 
 法三：欧拉筛法
+让每个合数只被它的最小质因数筛去，避免重复筛选，达到线性复杂度
+def euler(n):
+    flag = [True for _ in range(n+1)]#标记数组，初始时假设所有数都是素数
+    ans = []#存储找到的数
+    for i in range(2, n+1):#从2开始遍历
+        if flag[i]:#是素数
+            ans.append(i)#添加到列表里
+        for p in ans:#遍历当前已找到的素数
+            if i*p > n:#素数与i的乘积大于n,不需要处理更大的素数了
+                break
+            flag[i*p] = False#处理到这里，说明小于n，将素数与i的乘积标记为合数
+            if i%p == 0:#如果数能被素数整除，则停止处理更大的素数，保证只被最小质因数筛掉
+                break
+    return ans
