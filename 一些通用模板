@@ -164,19 +164,20 @@ def isPrime(n):#这个是判断某个数是不是质数
 利用素数的倍数是合数，从小到大遍历每个数字，如果是素数，筛掉其倍数
 以布尔数组来记录，并通过标记数组元素为False来模拟筛掉操作。
 def countPrime(n):
-    if n <= 1:#小于等于1时无质数
+    if n <= 1:#0和1不是素数
         return []
-    flag = [True for _ in range(n+1)]#标记数组，初始化为是质数
-    flag[0] = flag[1] = False#0和1不是质数
+    flag = [True for _ in range(n+1)] #建立标记数组
+    flag[0] = flag[1] = False
     ans = []
-    for i in range(2, n+1):#从2一直到最后
-        if not flag[i]:#如果不是质数，跳过
-            continue
-        for j in range(i*i, n+1, i):#能到此处的，必是合数，则从i*i开始一直到最后每次+i标记i的倍数为合数
-            flag[j] = False
-    for i in range(n+1):#统计质数
+    i = 2
+    while i*i <= n:#从2开始，循环到sqrt(n)
+        if flag[i]:#是素数
+            for j in range(i*i, n+1, i):#则从i*i开始到最后遍历，每次增加i即遍历i的倍数
+                flag[j] = False#标记为False
+        i += 1
+    for i in range(2, n+1):#统计筛完的数组
         if flag[i]:
-            ans.append(i)#添加到答案序列里
+            ans.append(i)
     return ans
 
 法三：欧拉筛法
