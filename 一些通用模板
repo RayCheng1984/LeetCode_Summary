@@ -175,7 +175,7 @@ def countPrime(n):
             for j in range(i*i, n+1, i):#则从i*i开始到最后遍历，每次增加i即遍历i的倍数
                 flag[j] = False#标记为False
         i += 1
-    for i in range(2, n+1):#统计筛完的数组
+    for i in range(2, n+1):#统计筛完的数组,从2开始，0和1不在讨论范围
         if flag[i]:
             ans.append(i)
     return ans
