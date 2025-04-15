@@ -194,3 +194,20 @@ def euler(n):
             if i%p == 0:#如果数能被素数整除，则停止处理更大的素数，保证只被最小质因数筛掉
                 break
     return ans
+
+7、最大公约数Greatest Common Divisor
+两个整数的最大公约数等于其中较小的那个数和两数相除余数的最大公约数
+欧几里得算法：递归计算两个数的最大公约数，小数在前也能正确计算，欧几里得算法会自动交换两者的位置（小数除以大数余数就是小数本身）
+def gcd(a, b):
+    return a if b == 0 else gcd(b, a % b)
+
+8、最小公倍数Least Common Mutiple
+mutiple有倍数的意思
+两个数的乘积等于这两个数的的最大公约数和最小公倍数的乘积
+def lcm(a, b):
+    return a*b // gcd(a, b)
+
+9、KMP算法
+10、马拉车算法
+11、树状数组
+12、线段数
