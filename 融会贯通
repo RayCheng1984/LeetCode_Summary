@@ -1,2 +1,55 @@
 (一)循环移位问题
 NO.189 旋转数组
+法一：空间复杂度为O(N)的解法
+当k很大时，只需对n取模，将求模的值当成新的k。
+复制一个完全一样的数组，每次移动时从新的数组里取数，算法空间复杂度为O(N)
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        copy = nums.copy()#复制数组
+        n = len(nums)
+        for i in range(n):
+            nums[(i + k) % n] = copy[i]#新数组加上位移后对N取模
+        return
+
+法二：三次翻转，空间复杂度为O(1)
+先对整个数组进行翻转，再从k处分隔数组，最后对分隔后的两个数组分别进行翻转。
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        def reverse(left, right):
+            while left < right:#翻转方法
+                nums[left], nums[right] = nums[right], nums[left]#这种写法只有python可使用
+                left += 1
+                right -= 1
+        n = len(nums)
+        k %= n
+        reverse(0, n-1)
+        reverse(0, k-1)
+        reverse(k, n-1)
+        return nums
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        def reverse(left, right):#翻转函数
+            while left < right:
+                temp = nums[left]#临时变量交换，适用于各种编程语言
+                nums[left] = nums[right]
+                nums[right] = temp
+                left += 1
+                right -= 1
+        
+        n = len(nums)
+        k %= n#对k取模
+        reverse(0, n-1)#第一次交换
+        reverse(0, k-1)#第二次交换
+        reverse(k, n-1)#第三次交换
+        return nums
