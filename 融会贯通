@@ -60,7 +60,33 @@ NO.61 旋转链表
 链表更简单，找到断点，重新拼接链表即可。断点是第n - k%n 个节点
 :=海象运算符，也叫赋值表达式
 语法格式： variable_name := expression or value即一个变量名后面跟一个表达式或一个值，可以看作一直新的赋值运算符
+闭合为环，找到新的尾节点后，将其next节点设为头节点，断开环即可。
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if k == 0 or not head or not head.next:#k为0或链表为空或只有一个节点，返回原链表
+            return head
+        
+        n = 1
+        cur = head
+        while cur.next:#计算链表长度
+            cur = cur.next#指针后移，长度+1
+            n += 1
+        
+        remain = n - k % n#需要移动到新链表头节点的步数
+        cur.next = head#之前指针已到尾节点，连接头节点，成环
+        while remain:#从尾节点开始，移动remain步，找到新的尾节点
+            cur = cur.next
+            remain -= 1
+        
+        res = cur.next#新链表表头是新尾节点的下一个节点
+        cur.next = None#断开环形链表，尾节点的next指针置为None
 
+        return res
 
 (二)编辑距离
 经典的动态规划问题
