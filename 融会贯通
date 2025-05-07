@@ -110,6 +110,20 @@ class Solution:
 1、堆
 NO.215 数组中的第K个最大元素
 
+python heapy:堆队列算法，其实现使用了数组，堆是一种二叉树，这里实现的是小根堆
+常用函数：heapq.heappush(heap, item):将item加入堆中
+heapq.pop(heap):弹出并返回heap的最小元素，保持堆的特性，如果堆为空，返回IndexError，使用heap[0]只访问最小元素而不弹出
+heapq.heappushpop(heap, item):将item放入堆中，并弹出最小元素，该操作比heappush()+heappop()更有效率。
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        h = []#建立一个空堆队列
+        for num in nums:#遍历数组中的每一个数
+            heapq.heappush(h, num)#将数添加到堆里面
+            if len(h) > k:#如果超过k个元素，则删除堆顶（最小）元素
+                heapq.heappop(h)
+        return h[0]#完成之后，堆顶元素就是这第k大元素
+
 NO.703 数据流中的第K大元素
 
 2、二分法
