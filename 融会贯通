@@ -125,6 +125,19 @@ class Solution:
         return h[0]#完成之后，堆顶元素就是这第k大元素
 
 NO.703 数据流中的第K大元素
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):#初始化KthLargest类，维护一个大小为k的最小堆
+        self.k = k 
+        self.heap = []#建立数组存放最小堆
+        for num in nums:#使用add函数初始化堆
+            self.add(num)
+
+    def add(self, val: int) -> int:#添加新元素并返回当前第k大的元素
+        heapq.heappush(self.heap, val)#将元素加入堆
+        if len(self.heap) > self.k:#如果堆的大小超过k，则弹出最小元素
+            heapq.heappop(self.heap)
+        return self.heap[0]#堆顶元素即为第k大元素
 
 2、二分法
 NO.230 二叉搜索树中第K小的元素
