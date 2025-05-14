@@ -141,6 +141,32 @@ class KthLargest:
 
 2、二分法
 NO.230 二叉搜索树中第K小的元素
+二叉搜索树BST:左子树所有节点值小于根节点值，右子树所有节点值大于根结点值
+如果根节点的左子树节点数=k-1，则根节点就是要找的节点
+如果根节点的左子树节点数>k-1，舍弃右子树，继续在左子树中找
+如果根节点的左子树节点数<k-1，舍弃左子树，继续在右子树中找
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        def countNode(node):#计算二叉搜索树节点数量
+            if node == None:#没有根节点返回0
+                return 0
+            l = countNode(node.left)#递归计算左子树节点数
+            r = countNode(node.right)#递归计算右子树节点数
+            return l + r + 1#返回节点数
+        
+        count = countNode(root.left)#计算左子树的节点数
+        if count == k - 1:#根节点正好是第k个节点
+            return root.val
+        elif count > k - 1:#第k个节点在左子树里，继续递归查找
+            return self.kthSmallest(root.left, k)
+        else:#第k个节点在右子树里，继续递归查找
+            return self.kthSmallest(root.right, k - count - 1)
 
 NO.378 有序矩阵中第K小的元素
 
