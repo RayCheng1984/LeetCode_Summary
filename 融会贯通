@@ -169,6 +169,26 @@ class Solution:
             return self.kthSmallest(root.right, k - count - 1)
 
 NO.378 有序矩阵中第K小的元素
+
+python heapq库：是最小堆，当需使用最大堆时，在插入元素时将元素取反，弹出也取反。
+1、创建堆：
+法一：定义一个空列表，使用heapq.heappush(item)将元素加入堆中
+heap = []
+heapq.heappush(heap, item)
+法二：使用heapq.heapify(list)将列表转化为堆
+heap = []
+heapq.heapify(heap)
+2、添加新元素
+heapq.heappush(heap, item)
+3、删除并返回堆顶元素
+heapq.heappop(heap)
+4、heapq.heappushpop(heap, item)比较添加元素与堆顶元素的大小，如果大于堆顶元素，删除并返回堆顶元素，然后添加新元素；
+如果小于堆顶元素，返回item，原堆不变；等价于添加新元素，然后删除并返回堆顶元素
+5、heapq.heapreplace(heap, item):删除并返回堆顶元素，然后添加新元素
+6、heapq.merge(heap1, heap2)合并多个排序后的序列成一个排序后的序列，然后返回排序后值的迭代器
+7、heapq.nsmallest(n, heap):查询堆中最小的n个元素
+8、heapq.nlargest(n, heap):查询堆中最大的n个元素
+
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         def notBiggerThanMid(mid):#统计矩阵中小于等于mid的元素个数
