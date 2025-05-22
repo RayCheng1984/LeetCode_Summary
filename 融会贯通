@@ -108,9 +108,12 @@ class Solution:
 
 (三)第K问题
 1、堆
+求第k大可以用最小堆，将所有元素入堆，当超过k时删除，最后堆顶的元素就是第k大
+求第k小可以用最小堆，删除堆里前k-1小的元素，则堆顶元素就是第k小
+
 NO.215 数组中的第K个最大元素
 
-python heapy:堆队列算法，其实现使用了数组，堆是一种二叉树，这里实现的是小根堆
+python heapq:堆队列算法，其实现使用了数组，堆是一种二叉树，这里实现的是小根堆
 常用函数：heapq.heappush(heap, item):将item加入堆中
 heapq.pop(heap):弹出并返回heap的最小元素，保持堆的特性，如果堆为空，返回IndexError，使用heap[0]只访问最小元素而不弹出
 heapq.heappushpop(heap, item):将item放入堆中，并弹出最小元素，该操作比heappush()+heappop()更有效率。
@@ -169,7 +172,6 @@ class Solution:
             return self.kthSmallest(root.right, k - count - 1)
 
 NO.378 有序矩阵中第K小的元素
-
 python heapq库：是最小堆，当需使用最大堆时，在插入元素时将元素取反，弹出也取反。
 1、创建堆：
 法一：定义一个空列表，使用heapq.heappush(item)将元素加入堆中
@@ -189,6 +191,7 @@ heapq.heappop(heap)
 7、heapq.nsmallest(n, heap):查询堆中最小的n个元素
 8、heapq.nlargest(n, heap):查询堆中最大的n个元素
 
+法一：
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         def notBiggerThanMid(mid):#统计矩阵中小于等于mid的元素个数
@@ -211,6 +214,18 @@ class Solution:
             else: #否则调整右边界
                 right = mid - 1
         return left #返回第k小的元素
+
+法二：
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n = len(matrix) #矩阵的长度
+        heap = [(matrix[i][0], i, 0) for i in range(n)] #取出第一列的值，列表每个值是(数字，行坐标，列坐标)三元组
+        heapq.heapify(heap) #将列表转化成堆
+        for i in range(k-1): #对于前k-1个元素
+            num, x, y = heapq.heappop(heap) #每次取出堆顶元素，分别存储他们的三元值
+            if y != n-1: #不是最后一列时
+                heapq.heappush(heap, (matrix[x][y+1], x, y+1)) #每次取出本行一个值，就将本行下一个值入堆
+        return heapq.heappop(heap)[0] #则堆顶元素三元值的第一个就是所求的值
 
 NO.668 乘法表中的第K小元素
 class Solution:
