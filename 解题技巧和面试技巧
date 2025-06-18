@@ -14,3 +14,25 @@ count()方法：统计字符串里某个字符或子字符串出现的次数，�
 对十进制整数x, 可以用x & (1 << k)来判断x的第k位是否为1，即当值大于0时，第k位为1（k从0开始）
 
 左移运算符<<： a<<n表示将a的二进制向左移动n位，右边的空位用0填充。数学上相当于将原数乘以2的n次方
+右移运算符>>: 右移n位然后与1，即将第n位移到最低位，可以检查该位是否为1.
+class Solution:
+    def minFlips(self, mat: List[List[int]]) -> int:
+        n, m = len(mat), len(mat[0])#求矩阵的长宽
+        ans = 10 #最多是3*3矩阵，最多翻转9次，设置一个大于9的次数
+        for i in range(1 << (n*m)):#m*n矩阵最多有2^(n*m)种排列结果，1左移n*m位，range不包含右端点，则其范围是0~1(1 << (n*m))-1,共2^(n*m)种结果，两者等价
+            temp = [[0]*m for _ in range(n)]#建立一个临时矩阵
+            for j in range(n):#行
+                for k in range(m):#列
+                    if (i >> (j*m + k)) & 1:#右移，将i的第j*m+k移到最低位然后按位与1,可以检查第j*m+k位是否为1，从而决定是否翻转该位
+                        temp[j][k] = 1 - temp[j][k]#是1翻转该位
+                        if j > 0:#检查相邻的上一格
+                            temp[j-1][k] = 1 - temp[j-1][k]
+                        if k > 0:#检查相邻的左一格
+                            temp[j][k-1] = 1 - temp[j][k-1]
+                        if j + 1 < n:#检查相邻的下一格
+                            temp[j+1][k] = 1 - temp[j+1][k]
+                        if k + 1 < m:#检查相邻的右一格
+                            temp[j][k+1] = 1 - temp[j][k+1]
+            if temp == mat:#如果临时矩阵翻转后等于原矩阵，更新最小翻转次数
+                ans = min(ans, bin(i).count('1'))#计算i的二进制表示中1的个数就是翻转次数
+        return ans if ans != 10 else -1
