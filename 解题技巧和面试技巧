@@ -40,3 +40,22 @@ class Solution:
 
 2、 复杂度
 NO.73 矩阵置零
+法一：用O(m+n)额外空间
+扫两遍matrix，第一遍用集合记录哪些行列有0，第二遍置0.
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        row, col = len(matrix), len(matrix[0])#行列长度
+        row_0 = set()#用集合存储有0的行索引
+        col_0 = set()#用集合存储有0的列索引
+        for i in range(row):#遍历找有0的行列
+            for j in range(col):
+                if matrix[i][j] == 0:#当某个位置是0时
+                    row_0.add(i)#将行索引存到集合里
+                    col_0.add(j)#将列索引存到集合里
+        for i in  range(row):#遍历置0
+            for j in range(col):
+                if i in row_0 or j in col_0:#当某行或某列在0集合里
+                    matrix[i][j] = 0#将对应的整行/整列置0
