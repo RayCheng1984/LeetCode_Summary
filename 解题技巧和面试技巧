@@ -96,3 +96,29 @@ class Solution:
 打表：提前将计算结果存起来，在实际的计算中直接使用。打表是空间换实际，其空间复杂度是O(1)
 1、顺次数
 NO.1291
+法一：
+class Solution:
+    def sequentialDigits(self, low: int, high: int) -> List[int]:
+        number = '123456789'#包含所有连续数字的字符串
+        n = len(number)#长度
+        ans = []#存储答案
+        for i in range(1, n):#控制生成数字的长度
+            for j in range(n-i):#控制字符串从哪个位置开始截取,j从0到n减去当前数字的长度
+                ans.append(int(number[j:i+j+1]))#截取
+        return [x for x in ans if x >= low and x <= high]#筛选low到high中间的结果
+
+法二：
+bisect.bisect_left(a,x,lo=0,high=len(a),key=None):查找目标元素左侧插入点
+bisect.bisecct与bisect.bisect_right等价，查找目标元素右侧插入点
+只有最后筛选用了二分法，其他一样
+class Solution:
+    def sequentialDigits(self, low: int, high: int) -> List[int]:
+        number = '123456789'#包含所有连续数字的字符串
+        n = len(number)
+        ans = []
+        for i in range(1, n):#i表示目标数字的位数
+            for j in range(n-i):#j表示从字符串的第j位开始截取i位数字
+                ans.append(int(number[j:i+j+1]))#截取并转换为整数
+        return ans[bisect.bisect_left(ans, low): bisect.bisect(ans, high)]#bisect_left找到第一个>=low的位置，bisect找到第一个大于high的位置
+
+法三：
