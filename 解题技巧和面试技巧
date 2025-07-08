@@ -122,3 +122,17 @@ class Solution:
         return ans[bisect.bisect_left(ans, low): bisect.bisect(ans, high)]#bisect_left找到第一个>=low的位置，bisect找到第一个大于high的位置
 
 法三：
+打表，长度为2的有8个，长度为3的有7个，长度为4的有6个，长度为5的有5个，长度为6的有4个，长度为7的有3个，长度为8的有两个，长度为9的有一个，数目是固定的
+class Solution:
+    def sequentialDigits(self, low: int, high: int) -> List[int]:
+        ans = [
+            12,23,34,45,56,67,78,89,
+            123,234,345,456,567,678,789,
+            1234,2345,3456,4567,5678,6789,
+            12345,23456,34567,45678,56789,
+            123456,234567,345678,456789,
+            1234567,2345678,3456789,
+            12345678,23456789,
+            123456789
+        ]
+        return [x for x in ans if x >= low and x <=high]
