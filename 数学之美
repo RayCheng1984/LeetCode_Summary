@@ -1,7 +1,27 @@
 一、两数之和
-建立值——索引值键值对，找到值后，通过字典找到索引值
-return [map[target-nums[i]], i]
-map[nums[i]] = i
+法一：
+暴力枚举，双层循环
+注意此题要求返回下标
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        n = len(nums)#求数组长度
+        for i in range(n):#遍历每个数
+            for j in range(i+1, n):
+                if nums[i] + nums[j] == target:#当两数之和等于目标值时
+                    return [i, j]#返回下标
+        return []
+
+法二：
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        n = len(nums)#求数组长度
+        map = {}#建立哈希表
+        for i in range(n):
+            if target - nums[i] in map:#当目标值减去当前值剩下的差值在哈希表里
+                return [i, map[target - nums[i]]]#用哈希表找到差值的下标
+            else:
+                map[nums[i]] = i #差值不在哈希表里，将当前数及下标放入
+        return []
 
 二、三数之和(速度最快版本）
 先排序
