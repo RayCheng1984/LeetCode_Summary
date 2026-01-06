@@ -24,22 +24,29 @@ class Solution:
         return []
 
 二、三数之和(速度最快版本）
-先排序
-如果nums[i]>0:break
-如果nums[i]==nums[i-1]:continue
-然后通过i、l、r三个指针判断nums[i]+nums[l]+nums[r]与0的关系：
-nums[i]+nums[l]+nums[r]<0:
-  l=l+1
-nums[i]+nums[l]+nums[r]>0:
-  r=r-1
-nums[i]+nums[l]+nums[r]=0:
-  res.append([]):
-  l+1
-  r-1
-  while l<r and nums[l]==nums[l-1]:
-    l+1
-  while l<r and nums[r]==nums[r+1]:#此处重点注意，左指针要与l-1比较，右指针要与r+1比较，否则给出的测试用例虽然能通过，但是一部分案例会出错。
-    r-1
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)#数组长度
+        nums.sort()#对数组进行排序，此题不需要下标，可以排序
+        res = []#放答案数组
+        for i in range(n-2):#3个数，两个指针，只需要循环到n-2
+            if i > 0 and nums[i] == nums[i-1]:#去重，重复值只保留的一个出现的
+                continue
+            left, right = i + 1, n - 1#左右指针
+            while left < right:#指针不越界时
+                if nums[i] + nums[left] + nums[right] < 0:#和小于0，左指针加1，重复值不影响结果，不用去重
+                    left += 1
+                elif nums[i] + nums[left] + nums[right] > 0:#和大于0，右指针减1，重复值不影响结果，不用去重
+                    right -= 1
+                else:#等于0，是答案，但是答案不唯一，要去重
+                    res.append([nums[i], nums[left], nums[right]])#加入答案
+                    while left < right and nums[left] == nums[left+1]:#去重，指针不越界且左边重复，不能用-1，否则会小于i造成越界
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:#去重，指针不越界且右边重复，不能用+1，否则会越界
+                        right -= 1
+                    left += 1#已经添加一个答案，继续
+                    right -= 1#继续
+        return res
 
 三、四数之和
 采用三数之和的思想，两重循环+两个指针
