@@ -23,7 +23,8 @@ class Solution:
                 map[nums[i]] = i #差值不在哈希表里，将当前数及下标放入
         return []
 
-二、三数之和(速度最快版本）
+二、三数之和
+几数之和就需要去几次重
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)#数组长度
@@ -49,10 +50,33 @@ class Solution:
         return res
 
 三、四数之和
-采用三数之和的思想，两重循环+两个指针
-第一重循环三种条件i>0 and nums[i]==nums[i-1]:continue
-第二重循环j要在i+1及len(nums)-1之间以及j>a+1且nums[j]==nums[j-1]时continue
-其他与三数之和类似
+几数之和就需要去几次重
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        n = len(nums)#数组长度
+        nums.sort()#不要求下标，可以排序
+        res = []#保存结果
+        for i in range(n-3):#4个数，只需要循环到n-3
+            if i > 0 and nums[i] == nums[i-1]:#第一个数去重
+                continue
+            for j in range(i+1, n-2):#只需循环到n-2
+                if j > i+1 and nums[j] == nums[j-1]:#第二个数去重
+                    continue
+                left, right = j + 1, n-1 #左右指针
+                while left < right: #不越界时
+                    if nums[i] + nums[j] + nums[left] + nums[right] < target:#小于目标值，左指针+1，重复值不影响结果，不用去重
+                        left += 1
+                    elif nums[i] + nums[j] + nums[left] + nums[right] > target:#大于目标值，右指针-1，重复值不影响结果，不用去重
+                        right -= 1
+                    else:
+                        res.append([nums[i], nums[j], nums[left], nums[right]])#添加结果
+                        while left < right and nums[left] == nums[left + 1]:#去重，去除区间外侧的
+                            left +=1
+                        while left < right and nums[right] == nums[right - 1]:#去重，去除区间外侧的
+                            right -= 1
+                        left += 1 #去完重，左指针+1
+                        right -= 1 #右指针-1
+        return res
 
 
 四、四数相加II
